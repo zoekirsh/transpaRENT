@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
-import MapContainer from './components/MapContainer';
+import Navbar from './components/Navbar';
+import Map from './components/Map';
 
 const URL = "http://localhost:3000"
 
@@ -9,7 +10,7 @@ function App() {
 
   // state
   const [user, setUser] = useState({ user: "i am the user"});
-  const [token, seToken] = useState("");
+  //const [token, setToken] = useState("");
 
   //// get user on page load
   useEffect(() => {
@@ -17,7 +18,7 @@ function App() {
   }, [])
 
   const fetchUser = () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.token
     if (token) {
       fetch(`${URL}/profile`, {
         headers: {
@@ -30,22 +31,45 @@ function App() {
     }
   }
 
+  const handleSignup = (e, userInfo) => {
+    e.preventDefault()
+    //if (data.user) {
+    //   localStorage.setItem("token", data.token)
+    //   setUser(data.user)
+    // }
+  }
+
   return (
     <div className="App">
       <header></header>
       <main>
         <div className="Main">
           {/* removed logo here */}
-          <NavBar user={ user }/>
+          <Navbar user={ user }/>
           <Switch>
-            <Route exact path="/" component={() => <MapContainer/>}/>
+            <Route exact path="/" component={() => <Map/>}/>
             <Route exact path="/login" />
             <Route exact path="signup" />
-            <Route exact path="/logout" />
-
+            
+            {/* localStorage.token && ( 
+              <>  */}
+            {/* user routes
             <Route exact path="/profile" />
+            <Route exact path="/mylistings" />
+            <Route exact path="/myreviews" />
+            <Route exact path="/logout" /> 
+            </>
+            ) */}
+            
+
+{/*      
+        
+        listed / review routes
+            <Route exact path="/list" />
+            <Route exact path="/reviews" /> */}
+
           </Switch>
-          <MapContainer />
+          <Map />
         </div>
       </main>
       <footer></footer>
