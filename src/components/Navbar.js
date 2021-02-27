@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { Menu, Dropdown } from 'semantic-ui-react';
 //import stylesheet
 
-const Navbar = ( { user }) => {
+const Navbar = ( { user } ) => {
 
   const [dropdownMenu, setDropdownMenu] = useState( {display: "none"} )
 
@@ -44,8 +44,12 @@ const Navbar = ( { user }) => {
         <Menu.Item
           name="signup"
           >
-            Sign up
+            <Link to="/signup">
+              Sign up
+            </Link>
         </Menu.Item>
+
+       
       </Menu.Menu>
 
       {/* if logged import */}
@@ -62,7 +66,7 @@ const Navbar = ( { user }) => {
 
               </Link>
               <Link to="/myreviews">
-                
+
               </Link>
             </Dropdown.Menu>
         </Dropdown>

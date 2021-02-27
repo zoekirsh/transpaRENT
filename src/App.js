@@ -3,6 +3,7 @@ import './App.css';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Map from './components/Map';
+import Signup from './components/Signup';
 
 const URL = "http://localhost:3000"
 
@@ -49,7 +50,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={() => <Map/>}/>
             <Route exact path="/login" />
-            <Route exact path="signup" />
+            <Route exact path="/signup" render={() => <Signup />}/>
             
             {/* localStorage.token && ( 
               <>  */}
@@ -69,7 +70,6 @@ function App() {
             <Route exact path="/reviews" /> */}
 
           </Switch>
-          <Map />
         </div>
       </main>
       <footer></footer>
