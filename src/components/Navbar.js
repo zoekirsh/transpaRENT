@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Dropdown } from 'semantic-ui-react';
-//import stylesheet
+import { Grid, Menu, Dropdown } from 'semantic-ui-react';
 
 const Navbar = ( { user } ) => {
 
   const [dropdownMenu, setDropdownMenu] = useState( {display: "none"} )
 
-  const leftNav = {
+  const nav = {
     margin: "0 12px 0",
     padding: "20px"
   }
@@ -20,87 +19,102 @@ const Navbar = ( { user } ) => {
   ///// this function will toggle the dropdown menu functionality
 
   return (
-    <Menu text fluid stackable style={{ margin: 20 }}>
-      <Link to="/">
-        <Menu.Item
-          name="listings"
-          style={leftNav}
-          >
-            Listings
-        </Menu.Item>
-      </Link>
-    
-      <Link to="/reviews">
-        <Menu.Item
-          name="reviews"
-          style={leftNav}
-          >
-            Reviews
-        </Menu.Item>
-      </Link>
-
-      {/* center it??? */}
-      <Link to="/">
-        <Menu.Item
-          name="home"
-          fitted="vertically"
-          style={logo}
-          >
-            <h1>transpa<span className="blue">rent</span></h1>
-        </Menu.Item>
-      </Link>
-      
-
-      {/* if not logged in */}
-      <Menu.Menu position="right" style={{ margin: 20 }}>
-        <Link to="/login">
-          <Menu.Item
-            name="login"
-            >
-              Login
-          </Menu.Item>
-        </Link>
-       
-       <Link to="/signup">
-        <Menu.Item
-            name="signup"
-            >
-              Sign up
-          </Menu.Item>
-       </Link>
-      </Menu.Menu>
-
-      {/* if logged in */}
-      <Menu.Menu position="right" style={{ margin: 20 }}>
-        <Dropdown
-          item
-          text={user.name}
-          >
-            <Dropdown.Menu>
-              <Link to="/profile">
-                <Dropdown.Item>Profile</Dropdown.Item>
-              </Link>
-              <Link to="/mylistings">
-                <Dropdown.Item>My Listings</Dropdown.Item>
-              </Link>
-              <Link to="/myreviews">
-                <Dropdown.Item>My Reviews</Dropdown.Item>
-              </Link>
-            </Dropdown.Menu>
-        </Dropdown>
-
+    <Grid columns={4}>
+      <Grid.Column>
+       <Menu text fluid stackable style={{ margin: 20 }}>
+          <Link to="/">
+            <Menu.Item
+              name="listings"
+              style={nav}
+              >
+                Listings
+            </Menu.Item>
+          </Link>
         
-        <Link to="/logout">
+          <Link to="/reviews">
+            <Menu.Item
+              name="reviews"
+              style={nav}
+              >
+                Reviews
+            </Menu.Item>
+          </Link>
+        </Menu>
+      </Grid.Column>
+     
+
+        {/* center it??? */}
+      <Grid.Column>
+        <Menu text fluid stackable style={{ margin: 20 }}>
+          <Link to="/">
+            <Menu.Item
+              name="home"
+              fitted="vertically"
+              style={logo}
+              >
+                <h1>transpa<span className="blue">rent</span></h1>
+            </Menu.Item>
+          </Link>
+        </Menu>
+      </Grid.Column>
+        
+
+        {/* if not logged in */}
+      <Grid.Column>
+        <Menu text fluid stackable style={{ margin: 20 }}>
+          <Link to="/login">
+            <Menu.Item
+              name="login"
+              style={nav}
+              >
+                Login
+            </Menu.Item>
+          </Link>
+        
+        <Link to="/signup">
           <Menu.Item
-            name="logout"
-            >
-              logout
-          </Menu.Item>
+              name="signup"
+              style={nav}
+              >
+                Sign up
+            </Menu.Item>
         </Link>
-      </Menu.Menu>
+        </Menu>
+      </Grid.Column>
 
-    </Menu>
+        {/* if logged in */}
+      <Grid.Column>
+        <Menu text fluid stackable style={{ margin: 20 }}>
+          <Dropdown
+            item
+            text={user.name}
+            >
+              <Dropdown.Menu>
+                <Link to="/profile">
+                  <Dropdown.Item>Profile</Dropdown.Item>
+                </Link>
+                <Link to="/mylistings">
+                  <Dropdown.Item>My Listings</Dropdown.Item>
+                </Link>
+                <Link to="/myreviews">
+                  <Dropdown.Item>My Reviews</Dropdown.Item>
+                </Link>
+              </Dropdown.Menu>
+          </Dropdown>
 
+          
+          <Link to="/logout">
+            <Menu.Item
+              name="logout"
+              style={nav}
+              >
+                logout
+            </Menu.Item>
+          </Link>
+        </Menu>
+      </Grid.Column>
+
+    </Grid>
 
 
 

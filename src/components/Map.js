@@ -66,9 +66,11 @@ const Map = () => {
     width: "100%"
   }
 
-  ///// set to Birdrock
+  ///// set to Balboa Park
   const defaultCenter = {
-    lat: 32.81358038304886, lng: -117.2684223435255
+    // wayfarer pastry
+    // lat: 32.81358038304886, lng: -117.2684223435255
+    lat: 32.730831, lng: -117.142586
   }
 
   const { isLoaded, loadError } = useLoadScript({
