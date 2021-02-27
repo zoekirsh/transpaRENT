@@ -4,6 +4,7 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Map from './components/Map';
 import Signup from './components/Signup';
+import Login from './components/Login';
 
 const URL = "http://localhost:3000"
 
@@ -49,7 +50,7 @@ function App() {
           <Navbar user={ user }/>
           <Switch>
             <Route exact path="/" component={() => <Map/>}/>
-            <Route exact path="/login" />
+            <Route exact path="/login" render={() => <Login />}/>
             <Route exact path="/signup" render={() => <Signup />}/>
             
             {/* localStorage.token && ( 

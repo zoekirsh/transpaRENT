@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu, Dropdown } from 'semantic-ui-react';
 //import stylesheet
 
@@ -7,27 +7,44 @@ const Navbar = ( { user } ) => {
 
   const [dropdownMenu, setDropdownMenu] = useState( {display: "none"} )
 
+  const leftNav = {
+    margin: "0 12px 0",
+    padding: "20px"
+  }
+
+  const logo = {
+    margin: "0 100px 0"
+  }
+
   //handleToggleDropdownMenu
   ///// this function will toggle the dropdown menu functionality
 
   return (
-    <Menu text fluid stackable>
-      <Menu.Item
-        name="listings"
-        >
-          Listings
-      </Menu.Item>
-      <Menu.Item
-        name="reviews"
-        >
-          Reviews
-      </Menu.Item>
+    <Menu text fluid stackable style={{ margin: 20 }}>
+      <Link to="/">
+        <Menu.Item
+          name="listings"
+          style={leftNav}
+          >
+            Listings
+        </Menu.Item>
+      </Link>
+    
+      <Link to="/reviews">
+        <Menu.Item
+          name="reviews"
+          style={leftNav}
+          >
+            Reviews
+        </Menu.Item>
+      </Link>
 
       {/* center it??? */}
       <Link to="/">
         <Menu.Item
           name="home"
           fitted="vertically"
+          style={logo}
           >
             <h1>transpa<span className="blue">rent</span></h1>
         </Menu.Item>
@@ -35,47 +52,51 @@ const Navbar = ( { user } ) => {
       
 
       {/* if not logged in */}
-      <Menu.Menu position="right">
-        <Menu.Item
-          name="login"
-          >
-            Login
-        </Menu.Item>
-        <Menu.Item
-          name="signup"
-          >
-            <Link to="/signup">
-              Sign up
-            </Link>
-        </Menu.Item>
-
+      <Menu.Menu position="right" style={{ margin: 20 }}>
+        <Link to="/login">
+          <Menu.Item
+            name="login"
+            >
+              Login
+          </Menu.Item>
+        </Link>
        
+       <Link to="/signup">
+        <Menu.Item
+            name="signup"
+            >
+              Sign up
+          </Menu.Item>
+       </Link>
       </Menu.Menu>
 
-      {/* if logged import */}
-      <Menu.Menu position="right">
+      {/* if logged in */}
+      <Menu.Menu position="right" style={{ margin: 20 }}>
         <Dropdown
           item
           text={user.name}
           >
             <Dropdown.Menu>
               <Link to="/profile">
-
+                <Dropdown.Item>Profile</Dropdown.Item>
               </Link>
               <Link to="/mylistings">
-
+                <Dropdown.Item>My Listings</Dropdown.Item>
               </Link>
               <Link to="/myreviews">
-
+                <Dropdown.Item>My Reviews</Dropdown.Item>
               </Link>
             </Dropdown.Menu>
         </Dropdown>
 
-        <Menu.Item
-          name="logout"
-          >
-            logout
-        </Menu.Item>
+        
+        <Link to="/logout">
+          <Menu.Item
+            name="logout"
+            >
+              logout
+          </Menu.Item>
+        </Link>
       </Menu.Menu>
 
     </Menu>

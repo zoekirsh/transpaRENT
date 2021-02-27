@@ -17,7 +17,21 @@
   color: #61dafb;
 }
 
+/* 
+remove when all linked up */
 .blue {
   color: #61dafb;
 }
 
+.center {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* HOW DO I CENTER THIS */
+.signup {
+  justify-content: center;
+}
