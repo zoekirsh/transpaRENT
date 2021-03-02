@@ -12,6 +12,7 @@ function App() {
 
   // state
   const [user, setUser] = useState({ user: "i am the user"});
+  console.log(user)
   //const [token, setToken] = useState("");
 
   //// get user on page load
@@ -28,17 +29,9 @@ function App() {
         },
       })
       .then(res => res.json())
-      .then(console.log)
-      // .then(data => setUser({ user: data.user}))
+      //.then(console.log)
+      .then(data => setUser({ user: data.user}))
     }
-  }
-
-  const handleSignup = (e, userInfo) => {
-    e.preventDefault()
-    //if (data.user) {
-    //   localStorage.setItem("token", data.token)
-    //   setUser(data.user)
-    // }
   }
 
   return (
@@ -46,12 +39,11 @@ function App() {
       <header></header>
       <main>
         <div className="Main">
-          {/* removed logo here */}
           <Navbar user={ user }/>
           <Switch>
             <Route exact path="/" component={() => <Map/>}/>
-            <Route exact path="/login" render={() => <Login />}/>
-            <Route exact path="/signup" render={() => <Signup />}/>
+            <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
+            <Route exact path="/signup" render={() => <Signup setUser={setUser}/>}/>
             
             {/* localStorage.token && ( 
               <>  */}

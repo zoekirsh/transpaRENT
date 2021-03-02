@@ -17,8 +17,6 @@
   color: #61dafb;
 }
 
-/* 
-remove when all linked up */
 .blue {
   color: #61dafb;
 }
@@ -34,4 +32,8 @@ remove when all linked up */
 /* HOW DO I CENTER THIS */
 .signup {
   justify-content: center;
+}
+
+#right-nav {
+  justify-content: flex-end;
 }

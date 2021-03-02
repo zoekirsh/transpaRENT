@@ -1,7 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Select, Button } from "semantic-ui-react";
 
-const Signup = () => {
+const Signup = ({ setUser }) => {
+
+  const [inputs, setInputs] = useState({ username: "", password: "", firstname: "", email: "", city: "", state: ""})
+  const URL = "http://localhost:3000/users"
+
+  const handleInputChange = (e) => {
+    e.persist()
+    setInputs(inputs => ({...inputs, [e.target.name]: e.target.value}))
+  }
+
+  const handleTest = (e) => {
+    e.preventDefault()
+    console.log(inputs)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    //POST user data to new user
+    fetch(URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({
+        user: {
+          username: inputs.username,
+          password: inputs.password,
+          name: inputs.firstname, 
+          email: inputs.email,
+          city: inputs.city,
+          state: inputs.state
+        }
+      })
+    })
+    .then(res=> res.json())
+    .then(newUser => {
+      localStorage.setItem("token", newUser.token)
+      setUser({ user: newUser })
+      //redirect
+      console.log("now redirect to... /profile")
+    })
+
+  }
 
   const states = [
     { text: "AL", value: "AL" }, { text: "AK", value: "AK" }, { text: "AZ", value: "AZ" }, 
@@ -25,20 +68,20 @@ const Signup = () => {
 
   return (
     <div className="signup">
-      <Form style={{ margin: 100 }}>
+      <Form onSubmit={handleTest} style={{ margin: 100 }}>
         <Form.Group className="username-password">
-          <Form.Field control={Input} label='Username' placeholder='Username'width={5}/>
-          <Form.Field control={Input} label='Password' placeholder='Password'width={5}/>
+          <Form.Field control={Input} onChange={handleInputChange} label='Username' name="username" value={inputs.username} placeholder='Username'width={5} required/>
+          <Form.Field control={Input} onChange={handleInputChange} label='Password' name="password" value={inputs.password} placeholder='Password'width={5} required/>
         </Form.Group>
 
         <Form.Group className="name-email">
-          <Form.Field control={Input} label='First Name' placeholder='Name'width={4}/>
-          <Form.Field control={Input} label='Email' placeholder='example@gmail.com'width={6}/>
+          <Form.Field control={Input} onChange={handleInputChange} label='First Name' name="firstname" value={inputs.firstname} placeholder='Name'width={4} required/>
+          <Form.Field control={Input} onChange={handleInputChange} label='Email' name="email" value={inputs.email} placeholder='example@gmail.com'width={6} required/>
         </Form.Group>
 
         <Form.Group className="city-state">
-          <Form.Field control={Input} label='City' placeholder='City'width={4}/>
-          <Form.Field control={Select} options={states} label='State' placeholder='State'width={1}/>
+          <Form.Field control={Input} onChange={handleInputChange} label='City' name="city" value={inputs.city} placeholder='City'width={4} required/>
+          <Form.Field control={Select} options={states} onChange={handleInputChange} label='State' name="state" placeholder='State'width={1} required/>
         </Form.Group>
 
         <Form.Field control={Button}>Submit</Form.Field>

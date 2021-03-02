@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Menu, Dropdown } from 'semantic-ui-react';
+import '../App.css';
+
+//dropdown for list view / map view
 
 const Navbar = ( { user } ) => {
 
-  const [dropdownMenu, setDropdownMenu] = useState( {display: "none"} )
+  //const [dropdownMenu, setDropdownMenu] = useState( {display: "none"} )
 
   const nav = {
-    margin: "0 12px 0",
     padding: "20px"
   }
 
@@ -15,12 +17,16 @@ const Navbar = ( { user } ) => {
     margin: "0 100px 0"
   }
 
+  // const right = {
+  //   "justify-content": "flex-end"
+  // }
+
   //handleToggleDropdownMenu
   ///// this function will toggle the dropdown menu functionality
 
   return (
-    <Grid columns={4}>
-      <Grid.Column>
+    <Grid columns={3}>
+      <Grid.Column className="left-nav">
        <Menu text fluid stackable style={{ margin: 20 }}>
           <Link to="/">
             <Menu.Item
@@ -42,8 +48,7 @@ const Navbar = ( { user } ) => {
         </Menu>
       </Grid.Column>
      
-
-        {/* center it??? */}
+      {/* logo */}
       <Grid.Column>
         <Menu text fluid stackable style={{ margin: 20 }}>
           <Link to="/">
@@ -59,87 +64,67 @@ const Navbar = ( { user } ) => {
       </Grid.Column>
         
 
-        {/* if not logged in */}
-      <Grid.Column>
-        <Menu text fluid stackable style={{ margin: 20 }}>
-          <Link to="/login">
-            <Menu.Item
-              name="login"
-              style={nav}
-              >
-                Login
-            </Menu.Item>
-          </Link>
-        
-        <Link to="/signup">
-          <Menu.Item
-              name="signup"
-              style={nav}
-              >
-                Sign up
-            </Menu.Item>
-        </Link>
-        </Menu>
-      </Grid.Column>
+      {/* logged in ? NO : YES */}
+      {!user.id ? (
+        <>
+          <Grid.Column>
+            <Menu text fluid stackable style={{ margin: 20 }}>
+              <Link to="/login">
+                <Menu.Item
+                  name="login"
+                  style={nav}
+                  >
+                    Login
+                </Menu.Item>
+              </Link>
+            
+              <Link to="/signup">
+                <Menu.Item
+                    name="signup"
+                    style={nav}
+                    >
+                      Sign up
+                  </Menu.Item>
+              </Link>
+            </Menu>
+          </Grid.Column>
+        </>
+      ) : (
+        <>
+          <Grid.Column id="right-nav">
+            <Menu text fluid stackable style={{ margin: 20 }}>
+              <Dropdown
+                item
+                text={user.name}
+                >
+                  <Dropdown.Menu>
+                    <Link to="/profile">
+                      <Dropdown.Item>Profile</Dropdown.Item>
+                    </Link>
+                    <Link to="/mylistings">
+                      <Dropdown.Item>My Listings</Dropdown.Item>
+                    </Link>
+                    <Link to="/myreviews">
+                      <Dropdown.Item>My Reviews</Dropdown.Item>
+                    </Link>
+                  </Dropdown.Menu>
+              </Dropdown>
 
-        {/* if logged in */}
-      <Grid.Column>
-        <Menu text fluid stackable style={{ margin: 20 }}>
-          <Dropdown
-            item
-            text={user.name}
-            >
-              <Dropdown.Menu>
-                <Link to="/profile">
-                  <Dropdown.Item>Profile</Dropdown.Item>
-                </Link>
-                <Link to="/mylistings">
-                  <Dropdown.Item>My Listings</Dropdown.Item>
-                </Link>
-                <Link to="/myreviews">
-                  <Dropdown.Item>My Reviews</Dropdown.Item>
-                </Link>
-              </Dropdown.Menu>
-          </Dropdown>
-
-          
-          <Link to="/logout">
-            <Menu.Item
-              name="logout"
-              style={nav}
-              >
-                logout
-            </Menu.Item>
-          </Link>
-        </Menu>
-      </Grid.Column>
+              
+              <Link to="/logout">
+                <Menu.Item
+                  name="logout"
+                  style={nav}
+                  >
+                    logout
+                </Menu.Item>
+              </Link>
+            </Menu>
+          </Grid.Column>
+        </>
+      ) }
 
     </Grid>
-
-
-
-    // <div className="navbar-main">
-    //     <nav className="map-review-side">
-    //       <NavLink className="link" exact to="/">Listings</NavLink>
-    //       <NavLink className="link" exact to="/reviews">Reviews</NavLink>
-    //     </nav>
-    //     <h1>transpa<span className="blue">rent</span></h1>
-    //     <nav className="user-side">
-    //       {!user.id ? (
-    //         <>
-    //             <NavLink className="link" exact to="/login">Login</NavLink>
-    //             <NavLink className="link" exact to="/signup">Register</NavLink>
-    //         </>
-    //       ) : (
-    //         <>
-    //             {/* user dropdown */}
-    //             <NavLink className="link" exact to="/">{user.name}</NavLink>
-    //             <NavLink className="link" exact to="/logout">logout</NavLink>
-    //         </>
-
-    //       ) }
-    //     </nav>
-    // </div>
   )
 }
 

@@ -6,7 +6,8 @@ const Map = () => {
 
   const realtorAPIKey = "1a96c214bcmshee3d6c8642e6226p1fd718jsn6cc676cb3bae"
   const realtorAPIHost = "realtor-com-real-estate.p.rapidapi.com"
-  const realtorAPIURL = "https://realtor-com-real-estate.p.rapidapi.com/for-rent?city=San%20Diego&state_code=CA&limit=42&offset=0&location=92037-6941"
+  const realtorAPIURL = "https://realtor-com-real-estate.p.rapidapi.com/for-rent?city=San%20Diego&state_code=CA&limit=100&offset=0&location=92037-6941"
+  //const realtorAPITest = "https://realtor-com-real-estate.p.rapidapi.com/for-rent?city=San%20Diego&state_code=CA&id=2923914928"
 
   //abstract city string & state code
   ////const city = "San Diego"
@@ -77,7 +78,7 @@ const Map = () => {
     googleMapsApiKey: process.env.REACT_APP_TRANSPARENT_GOOGLE_KEY
   })
 
-  console.log(process.env.REACT_APP_TRANSPARENT_GOOGLE_KEY)
+  //console.log(process.env.REACT_APP_TRANSPARENT_GOOGLE_KEY)
 
   if(loadError) return "load error"
   if(!isLoaded) return "is loaded?"
