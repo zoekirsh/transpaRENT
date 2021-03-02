@@ -11,14 +11,17 @@ const URL = "http://localhost:3000"
 function App() {
 
   // state
-  const [user, setUser] = useState({ user: "i am the user"});
-  console.log(user)
+  const [user, setUser] = useState({ user: "i am the user"})
   //const [token, setToken] = useState("");
 
   //// get user on page load
   useEffect(() => {
     fetchUser()
   }, [])
+
+  /////////////////////////////
+  console.log(user)
+  /////////////////////////////
 
   const fetchUser = () => {
     const token = localStorage.token
@@ -34,6 +37,11 @@ function App() {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    return <Redirect to="/" push={true}/>
+  }
+
   return (
     <div className="App">
       <header></header>
@@ -45,15 +53,15 @@ function App() {
             <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
             <Route exact path="/signup" render={() => <Signup setUser={setUser}/>}/>
             
-            {/* localStorage.token && ( 
-              <>  */}
-            {/* user routes
+            {localStorage.token && ( 
+              <> 
+              {/* user routes */}
             <Route exact path="/profile" />
             <Route exact path="/mylistings" />
             <Route exact path="/myreviews" />
-            <Route exact path="/logout" /> 
+            <Route exact path="/logout" component={() => handleLogout()}/> 
             </>
-            ) */}
+            )}
             
 
 {/*      

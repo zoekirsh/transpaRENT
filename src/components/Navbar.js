@@ -65,7 +65,7 @@ const Navbar = ( { user } ) => {
         
 
       {/* logged in ? NO : YES */}
-      {!user.id ? (
+      {!user.user.id ? (
         <>
           <Grid.Column>
             <Menu text fluid stackable style={{ margin: 20 }}>
@@ -95,7 +95,7 @@ const Navbar = ( { user } ) => {
             <Menu text fluid stackable style={{ margin: 20 }}>
               <Dropdown
                 item
-                text={user.name}
+                text={user.user.name}
                 >
                   <Dropdown.Menu>
                     <Link to="/profile">

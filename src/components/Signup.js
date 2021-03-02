@@ -1,42 +1,34 @@
 import React, { useState } from 'react';
-import { Form, Input, Select, Button } from "semantic-ui-react";
+import { Form, Input, Dropdown, Button } from "semantic-ui-react";
 
 const Signup = ({ setUser }) => {
 
-  const [inputs, setInputs] = useState({ username: "", password: "", firstname: "", email: "", city: "", state: ""})
-  const URL = "http://localhost:3000/users"
+  const [inputs, setInputs] = useState({ username: "", password: "", name: "", email: "", city: "", state: ""})
+  const URL = "http://localhost:3000/signup"
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e, value) => {
     e.persist()
-    setInputs(inputs => ({...inputs, [e.target.name]: e.target.value}))
+    setInputs(inputs => ({...inputs, [e.target.name]: value.value}))
   }
 
-  const handleTest = (e) => {
-    e.preventDefault()
-    console.log(inputs)
+  const handleSelect = (e, value) => {
+    e.persist()
+    setInputs({...inputs, state: value.value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
+    //debugger
     //POST user data to new user
     fetch(URL, {
       method: 'POST',
       headers: {
         'Content-Type' : 'application/json'
       },
-      body: JSON.stringify({
-        user: {
-          username: inputs.username,
-          password: inputs.password,
-          name: inputs.firstname, 
-          email: inputs.email,
-          city: inputs.city,
-          state: inputs.state
-        }
-      })
+      body: JSON.stringify( inputs )
     })
     .then(res=> res.json())
+    // .then(console.log)
     .then(newUser => {
       localStorage.setItem("token", newUser.token)
       setUser({ user: newUser })
@@ -68,20 +60,23 @@ const Signup = ({ setUser }) => {
 
   return (
     <div className="signup">
-      <Form onSubmit={handleTest} style={{ margin: 100 }}>
+      <Form onSubmit={handleSubmit} style={{ margin: 100 }}>
         <Form.Group className="username-password">
-          <Form.Field control={Input} onChange={handleInputChange} label='Username' name="username" value={inputs.username} placeholder='Username'width={5} required/>
-          <Form.Field control={Input} onChange={handleInputChange} label='Password' name="password" value={inputs.password} placeholder='Password'width={5} required/>
+          <Form.Field control={Input} onChange={handleInputChange} label='Username' name="username" value={inputs.username} placeholder='Username' width={5} required/>
+          <Form.Field control={Input} onChange={handleInputChange} type="password" label='Password' name="password" value={inputs.password} placeholder='Password' width={5} required/>
         </Form.Group>
 
         <Form.Group className="name-email">
-          <Form.Field control={Input} onChange={handleInputChange} label='First Name' name="firstname" value={inputs.firstname} placeholder='Name'width={4} required/>
-          <Form.Field control={Input} onChange={handleInputChange} label='Email' name="email" value={inputs.email} placeholder='example@gmail.com'width={6} required/>
+          <Form.Field control={Input} onChange={handleInputChange} label='First Name' name="name" value={inputs.name} placeholder='Name' width={4} required/>
+          <Form.Field control={Input} onChange={handleInputChange} label='Email' name="email" value={inputs.email} placeholder='example@gmail.com' width={6} required/>
         </Form.Group>
 
         <Form.Group className="city-state">
-          <Form.Field control={Input} onChange={handleInputChange} label='City' name="city" value={inputs.city} placeholder='City'width={4} required/>
-          <Form.Field control={Select} options={states} onChange={handleInputChange} label='State' name="state" placeholder='State'width={1} required/>
+          <Form.Field control={Input} onChange={handleInputChange} label='City' name="city" value={inputs.city} placeholder='City' width={4} required/>
+          <Form.Field required>
+            <label>State</label>
+            <Dropdown selection options={states} onChange={handleSelect} label='State' name="state" value={inputs.state} placeholder='State' width={1}/>
+          </Form.Field>
         </Form.Group>
 
         <Form.Field control={Button}>Submit</Form.Field>
