@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Menu, Dropdown } from 'semantic-ui-react';
 import '../App.css';
 
-//dropdown for list view / map view
+///CODE: dropdown for list view / map view
 
 const Navbar = ( { user } ) => {
 
@@ -64,7 +64,7 @@ const Navbar = ( { user } ) => {
       </Grid.Column>
         
 
-      {/* logged in ? NO : YES */}
+      {/* logged in ? YES : NO */}
       {!user.user.id ? (
         <>
           <Grid.Column>

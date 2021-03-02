@@ -13,7 +13,6 @@ const Map = () => {
   ////const city = "San Diego"
   ////const state = "CA"
 
-  //state hooks
   const [ selected, setSelected ] = useState({});
   const [ locations, setLocations ] = useState([]);
 
@@ -21,8 +20,7 @@ const Map = () => {
     setSelected(item)
   }
 
-
-  //effect hook
+  //////get listings & mount 
   useEffect(() => {
     loadData()
   }, [] )
@@ -41,9 +39,10 @@ const Map = () => {
   }
 
   const populateMap = () => {
-    //console.log(locations)
     if (locations.length > 0) {
+      //
       console.log(locations)
+      //
       return locations.map(place => {
         if (place.location?.address?.coordinate?.lat && place.location?.address?.coordinate?.lon) {
           return (
@@ -62,14 +61,20 @@ const Map = () => {
   }
  
 
+  ///////map tingz
   const mapStyles = {
     height: "100vh",
     width: "100%"
   }
 
-  ///// set to Balboa Park
+  const photoStyles = {
+    height: "300px",
+    width: "75%"
+  }
+
+  // set to: Balboa Park
   const defaultCenter = {
-    // wayfarer pastry
+    // Wayfarer Pastry (bird rock)
     // lat: 32.81358038304886, lng: -117.2684223435255
     lat: 32.730831, lng: -117.142586
   }
@@ -94,11 +99,38 @@ const Map = () => {
         {
           selected.location && (
             <InfoWindow
-            position={selected.location.address.coordinate}
+            position={{
+              lat: selected.location.address.coordinate.lat,
+              lng: selected.location.address.coordinate.lon
+            }}
             clickable={true}
             onCloseClick={() => setSelected({})}
             >
-              <p>{selected.description.name}</p>
+              <div>
+                <h5>{selected.description.name}</h5>
+                {
+                  selected.description.beds_min == selected.description.beds_max? 
+                  <p>{selected.description.beds_min} bed</p>
+                : 
+                  <p>{selected.description.beds_min == 0 ? ("studio") : (selected.description.beds_min)} - {selected.description.beds_max} bed</p>
+                }
+
+                {
+                  selected.description.baths_min == selected.description.baths_max? 
+                  <p>{selected.description.baths_min} bath</p>
+                  :
+                  <p>{selected.description.baths_min} - {selected.description.baths_max} bath</p>
+                }
+
+                {
+                  selected.list_price_min == selected.list_price_max ? 
+                  <p>${selected.list_price_max}</p>
+                  :
+                  <p>${selected.list_price_min}- ${selected.list_price_max}</p>
+                }
+                
+                <img src={selected.primary_photo.href} style={photoStyles}></img>
+              </div>
               </InfoWindow>
           )
       }

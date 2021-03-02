@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { Form, Button } from "semantic-ui-react";
 
 const Login = ({ setUser }) => {
 
   const [login, setLogin] = useState({})
+  const history = useHistory()
+
   const URL = "http://localhost:3000/login"
 
   const handleChange = (e) => {
@@ -11,8 +14,10 @@ const Login = ({ setUser }) => {
     setLogin(login => ({...login, [e.target.name]: e.target.value}))
   }
 
+  //////handle login
   const handleSubmit = (e) => {
     e.preventDefault()
+  
     fetch(URL, {
       method: 'POST',
       headers: {
@@ -25,11 +30,12 @@ const Login = ({ setUser }) => {
       })
     })
     .then(res => res.json())
+    //.then(data => console.log(data))
     .then(data => {
       localStorage.setItem("token", data.token)
-      setUser({ user: data.user })
-      //redirect
-      console.log("now redirect to.. profile? home? reviews?")
+      setUser({ user: data.id })
+      ////// redirect
+      history.push({ pathname: "/"})
     })
   }
 
@@ -48,6 +54,7 @@ const Login = ({ setUser }) => {
           <label>Password</label>
           <input 
             name="password"
+            type="password"
             value={login.password}
             onChange={handleChange}
             placeholder="Password" />
@@ -58,4 +65,4 @@ const Login = ({ setUser }) => {
   )
 }
 
-export default Login 
+export default Login

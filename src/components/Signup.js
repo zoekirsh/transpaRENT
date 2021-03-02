@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { Form, Input, Dropdown, Button } from "semantic-ui-react";
 
 const Signup = ({ setUser }) => {
 
   const [inputs, setInputs] = useState({ username: "", password: "", name: "", email: "", city: "", state: ""})
+  const history = useHistory()
+  
   const URL = "http://localhost:3000/signup"
 
+
+  //////form control
   const handleInputChange = (e, value) => {
     e.persist()
     setInputs(inputs => ({...inputs, [e.target.name]: value.value}))
@@ -16,10 +21,12 @@ const Signup = ({ setUser }) => {
     setInputs({...inputs, state: value.value })
   }
 
+
+  /////handle signup
   const handleSubmit = (e) => {
     e.preventDefault()
-    //debugger
-    //POST user data to new user
+  
+    //create new user
     fetch(URL, {
       method: 'POST',
       headers: {
@@ -28,12 +35,12 @@ const Signup = ({ setUser }) => {
       body: JSON.stringify( inputs )
     })
     .then(res=> res.json())
-    // .then(console.log)
+    // .then(data => console.log(data))
     .then(newUser => {
       localStorage.setItem("token", newUser.token)
-      setUser({ user: newUser })
-      //redirect
-      console.log("now redirect to... /profile")
+      setUser({ user: newUser.user })
+      //// redirect
+      history.push({ pathname: "/" })
     })
 
   }

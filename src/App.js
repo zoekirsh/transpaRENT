@@ -12,7 +12,7 @@ function App() {
 
   // state
   const [user, setUser] = useState({ user: "i am the user"})
-  //const [token, setToken] = useState("");
+  const [token, setToken] = useState("");
 
   //// get user on page load
   useEffect(() => {
@@ -20,7 +20,7 @@ function App() {
   }, [])
 
   /////////////////////////////
-  console.log(user)
+  console.log(user, token)
   /////////////////////////////
 
   const fetchUser = () => {
@@ -33,12 +33,16 @@ function App() {
       })
       .then(res => res.json())
       //.then(console.log)
-      .then(data => setUser({ user: data.user}))
+      .then(data => {
+        setUser({ user: data.user })
+        setToken(data.token)
+      })
     }
   }
 
   const handleLogout = () => {
     localStorage.removeItem("token")
+    setUser({ user: "Bye bye"})
     return <Redirect to="/" push={true}/>
   }
 
