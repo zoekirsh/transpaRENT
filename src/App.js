@@ -61,7 +61,7 @@ function App() {
             {/* listed / review routes */} 
             <Route exact path="/list" />
             <Route exact path="/reviews" /> 
-            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps}/> }/>
+            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token}/> }/>
             
             {/* user routes */}
             {localStorage.token && ( 

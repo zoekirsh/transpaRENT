@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Review = (address) => {
-  return (
+const Review = ( review ) => {
+  return(
     <div>
-      <h3>this will be a review</h3>
+      <p>reviewwww</p>
     </div>
   )
 }

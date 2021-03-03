@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react'; 
+import AddReview from './AddReview';
 import Review from './Review';
 
 const Listing = ( props ) => {
 
   const [listing, setListing] = useState(props.location.state)
+  const [reviews, setReviews] = useState([])
   const [reviewInput, setReviewInput] = useState(false)
   
   const URL = "https://realtor-com-real-estate.p.rapidapi.com/property-detail?property_id="
 
-  //console.log(props)
+  console.log(props.user.user)
   console.log(listing)
 
   //////if listing obj not passed as prop, fetch listing
@@ -29,6 +31,12 @@ const Listing = ( props ) => {
     })
     .then(res => res.json())
     .then(data => setListing(data.data))
+  }
+
+  const renderReviews = () => {
+    return (
+      reviews.map(review => <Review review={review}/>)
+    )
   }
 
   const toggleReviewInput = () => {
@@ -81,11 +89,16 @@ const Listing = ( props ) => {
         <h3>Reviews</h3>
 
         <div className="reviews">
-          <p>No one has said anything about this property yet. Be the first!</p>
+          {reviews.length === 0 ? 
+            <p><i>No one has said anything about this property yet. Be the first!</i></p>
+            : 
+            renderReviews() 
+          }
+          
           {reviewInput === false ? 
             <Button basic color="grey" content="Write Review" onClick={toggleReviewInput}/>
             : 
-            <Review />
+            <AddReview listing={listing} user={props.user.user} token={props.token}/>
           }
           
         </div>
