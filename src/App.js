@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Map from './components/Map';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Listing from './components/Listing';
 
 const URL = "http://localhost:3000"
 
@@ -53,26 +54,24 @@ function App() {
         <div className="Main">
           <Navbar user={ user }/>
           <Switch>
-            <Route exact path="/" component={() => <Map/>}/>
+            <Route exact path="/" render={() => <Map />}/>
             <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
             <Route exact path="/signup" render={() => <Signup setUser={setUser}/>}/>
             
+            {/* listed / review routes */} 
+            <Route exact path="/list" />
+            <Route exact path="/reviews" /> 
+            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps}/> }/>
+            
+            {/* user routes */}
             {localStorage.token && ( 
-              <> 
-              {/* user routes */}
+              <>
             <Route exact path="/profile" />
             <Route exact path="/mylistings" />
             <Route exact path="/myreviews" />
             <Route exact path="/logout" component={() => handleLogout()}/> 
             </>
             )}
-            
-
-{/*      
-        
-        listed / review routes
-            <Route exact path="/list" />
-            <Route exact path="/reviews" /> */}
 
           </Switch>
         </div>

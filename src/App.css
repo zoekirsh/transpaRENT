@@ -29,11 +29,15 @@
   align-items: center;
 }
 
-/* HOW DO I CENTER THIS */
+/* HOW DO I CENTER THIS? */
 .signup {
   justify-content: center;
 }
 
 #right-nav {
   justify-content: flex-end;
+}
+
+.reviews-container { 
+  padding-bottom: 3em;
 }

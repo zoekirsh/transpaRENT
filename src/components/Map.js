@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
 
 
@@ -15,9 +16,18 @@ const Map = () => {
 
   const [ selected, setSelected ] = useState({});
   const [ locations, setLocations ] = useState([]);
+  const history = useHistory()
 
   const onSelect = (item) => {
     setSelected(item)
+  }
+
+  //how do i pass the entire selected state??
+  const goToShowPage = (id) => {
+    history.push({
+      pathname: `/viewlisting/${id}`,
+      state: selected
+    })
   }
 
   //////get listings & mount 
@@ -129,7 +139,7 @@ const Map = () => {
                   <p>${selected.list_price_min}- ${selected.list_price_max}</p>
                 }
                 
-                <img src={selected.primary_photo.href} style={photoStyles}></img>
+                <img src={selected.primary_photo.href} style={photoStyles} onClick={() => goToShowPage(selected.property_id)}></img>
               </div>
               </InfoWindow>
           )
