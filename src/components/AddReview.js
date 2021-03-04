@@ -33,7 +33,7 @@ const AddReview = ( props ) => {
         body: JSON.stringify( reviewDetails )
       })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => props.setReviews([...props.reviews, data]))
       //render to page
     } 
    

@@ -118,27 +118,24 @@ const Map = () => {
               <div>
                 <h5>{selected.description.name}</h5>
                 {
-                  selected.description.beds_min == selected.description.beds_max? 
-                  <p>{selected.description.beds_min} bed</p>
-                : 
-                  <p>{selected.description.beds_min == 0 ? ("studio") : (selected.description.beds_min)} - {selected.description.beds_max} bed</p>
+                  selected.description.beds_min === selected.description.beds_max
+                  ? <p>{selected.description.beds_min} bed</p>
+                  : <p>{selected.description.beds_min === 0 ? ("studio") : (selected.description.beds_min)} - {selected.description.beds_max} bed</p>
                 }
 
                 {
-                  selected.description.baths_min == selected.description.baths_max? 
-                  <p>{selected.description.baths_min} bath</p>
-                  :
-                  <p>{selected.description.baths_min} - {selected.description.baths_max} bath</p>
+                  selected.description.baths_min === selected.description.baths_max
+                  ? <p>{selected.description.baths_min} bath</p>
+                  : <p>{selected.description.baths_min} - {selected.description.baths_max} bath</p>
                 }
 
                 {
-                  selected.list_price_min == selected.list_price_max ? 
-                  <p>${selected.list_price_max}</p>
-                  :
-                  <p>${selected.list_price_min}- ${selected.list_price_max}</p>
+                  selected.list_price_min === selected.list_price_max 
+                  ? <p>${selected.list_price_max}</p>
+                  : <p>${selected.list_price_min}- ${selected.list_price_max}</p>
                 }
                 
-                <img src={selected.primary_photo.href} style={photoStyles} onClick={() => goToShowPage(selected.property_id)}></img>
+                <img src={selected.primary_photo.href} alt="property primary" style={photoStyles} onClick={() => goToShowPage(selected.property_id)}></img>
               </div>
               </InfoWindow>
           )

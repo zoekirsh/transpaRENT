@@ -50,3 +50,12 @@
   align-items: center;
   justify-content: space-evenly;
 }
+
+.review {
+  padding-bottom: 3em;
+  padding-top: 3em;
+}
+
+.review-user {
+  justify-content: flex-end;
+}

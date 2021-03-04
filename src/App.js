@@ -53,7 +53,7 @@ function App() {
   }
 
   const removeFromFavorites = (listing) => {
-    if (favorites[0].property_id == listing.property_id) {
+    if (favorites[0].property_id === listing.property_id) {
       setFavorites(favorites.unshift)
     } else {
       console.log("need to find the listing object")
