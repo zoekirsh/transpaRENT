@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'semantic-ui-react'; 
+import { Button, Icon } from 'semantic-ui-react'; 
 import AddReview from './AddReview';
 import Review from './Review';
 
 const Listing = ( props ) => {
 
-  const [listing, setListing] = useState(props.location.state)
-  const [reviews, setReviews] = useState([])
-  const [reviewInput, setReviewInput] = useState(false)
-  
+  const [ listing, setListing ] = useState(props.location.state)
+  const [ reviews, setReviews ] = useState([])
+  const [ reviewInput, setReviewInput ] = useState(false)
+  const [ favorite, setFavorite ] = useState(false)
+  const [ favoriteId, setFavoriteId ] = useState(0)
+
   const URL = "https://realtor-com-real-estate.p.rapidapi.com/property-detail?property_id="
+  const faveURL = "http://localhost:3000/favorites"
 
   console.log(props.user.user)
   console.log(listing)
@@ -33,21 +36,72 @@ const Listing = ( props ) => {
     .then(data => setListing(data.data))
   }
 
+  //////REVIEWS 
   const renderReviews = () => {
     return (
       reviews.map(review => <Review review={review}/>)
     )
   }
 
+      //CODE: 
+      //disable button unless logged in? reroute to signup?
   const toggleReviewInput = () => {
     setReviewInput(!reviewInput)
-  }
+  } 
+  
 
-  console.log(reviewInput)
+  
+  //////FAVORITE
+  const toggleFavorite = () => {
+ 
+    const token = localStorage.token
+
+    if (token) {
+      if (!favorite) {
+        //create favorite
+        fetch(faveURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json',
+            "Authorization" : `Bearer ${token}`
+          },
+          body: JSON.stringify( {
+            user_id : props.user.user.id,
+            property_id: listing.property_id
+          } )
+        })
+        .then(res => res.json())
+        .then(data => {
+          setFavoriteId(data.favorite.id)
+          setFavorite(!favorite)
+        })
+        //props.addToFavorite(listing) ?
+      }
+  
+      if (favorite) {
+        //delete favorite
+        fetch(faveURL + `/${favoriteId}`, {
+          method: 'DELETE', 
+          headers: {
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+        .then(res => res.json())
+        .then(setFavorite(!favorite))
+        //props.removeFromFavorites(listing)
+        
+      }
+    }
+    
+  }
 
   return (
     <div>
-      <h2>{listing.description.name}</h2>
+      <h2>{listing.description.name} {favorite ? 
+        <Icon name='heart' onClick={toggleFavorite} /> 
+        : 
+        <Icon name='heart outline' onClick={toggleFavorite} />}</h2>
+      
 
       <div className="listing_images">
         <img src={listing.primary_photo.href}></img>
@@ -80,7 +134,7 @@ const Listing = ( props ) => {
 
         <p>{listing.location.address.line}, {listing.location.address.city}</p>
         <p>Built in {listing.description.year_built}</p>
-        <p>*{listing.pet_policy.cats && listing.pet_policy.dogs ? ("allows pets") : ("does not allow pets")}*</p>
+        <p>*{listing.pet_policy?.cats && listing.pet_policy?.dogs ? ("allows pets") : ("does not allow pets")}*</p>
       
       </div>
         <hr></hr>

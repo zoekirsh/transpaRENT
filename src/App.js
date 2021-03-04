@@ -12,8 +12,9 @@ const URL = "http://localhost:3000"
 function App() {
 
   // state
-  const [user, setUser] = useState({ user: "i am the user"})
-  const [token, setToken] = useState("");
+  const [ user, setUser ] = useState({ user: "i am the user"})
+  const [ token, setToken ] = useState("");
+  const [ favorites, setFavorites ] = useState([]);
 
   //// get user on page load
   useEffect(() => {
@@ -47,6 +48,18 @@ function App() {
     return <Redirect to="/" push={true}/>
   }
 
+  const addToFavorites = (listing) => {
+    setFavorites([listing, ...favorites])
+  }
+
+  const removeFromFavorites = (listing) => {
+    if (favorites[0].property_id == listing.property_id) {
+      setFavorites(favorites.unshift)
+    } else {
+      console.log("need to find the listing object")
+    }
+  }
+
   return (
     <div className="App">
       <header></header>
@@ -61,7 +74,7 @@ function App() {
             {/* listed / review routes */} 
             <Route exact path="/list" />
             <Route exact path="/reviews" /> 
-            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token}/> }/>
+            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} token={token}/> }/>
             
             {/* user routes */}
             {localStorage.token && ( 

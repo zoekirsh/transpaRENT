@@ -6,7 +6,7 @@ const AddReview = ( props ) => {
 
   const URL = "http://localhost:3000/reviews"
 
-  const [reviewDetails, setReviewDetails] = useState({ 
+  const [ reviewDetails, setReviewDetails ] = useState({ 
     text:"", 
     address: props.listing.location.address.line, 
     user_id: props.user.id, 
@@ -34,6 +34,7 @@ const AddReview = ( props ) => {
       })
       .then(res => res.json())
       .then(data => console.log(data))
+      //render to page
     } 
    
   }

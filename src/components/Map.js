@@ -22,7 +22,6 @@ const Map = () => {
     setSelected(item)
   }
 
-  //how do i pass the entire selected state??
   const goToShowPage = (id) => {
     history.push({
       pathname: `/viewlisting/${id}`,
@@ -51,7 +50,7 @@ const Map = () => {
   const populateMap = () => {
     if (locations.length > 0) {
       //
-      console.log(locations)
+      //console.log(locations)
       //
       return locations.map(place => {
         if (place.location?.address?.coordinate?.lat && place.location?.address?.coordinate?.lon) {
