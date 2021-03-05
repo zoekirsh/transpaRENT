@@ -4,15 +4,15 @@ import { Card, Image } from 'semantic-ui-react';
 
 const Fave = ( props ) => {
 
-  //const [ fave, setFave ] = useState(props.fave)
+  //console.log("FAVE!", props) 
 
-  console.log("FAVE!", props) 
+  
+  ///////onClick for card
 
-  //onClick for card
-  //id = property_id
-  // const goToShowPage = (id) => {
+  // const goToShowPage = (property_id) => {
   //   history.push({
-  //     pathname: `/viewlisting/${id}`
+  //     pathname: `/viewlisting/${property_id}`,
+  //     state: props.fave.primary_photo
   //   })
   // }
   

@@ -29,6 +29,11 @@
   align-items: center;
 }
 
+.address-search {
+  position: absolute;
+  z-index: 10;
+}
+
 /* HOW DO I CENTER THIS? */
 .signup {
   justify-content: center;

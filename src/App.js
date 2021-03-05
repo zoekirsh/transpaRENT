@@ -3,6 +3,7 @@ import './App.css';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Map from './components/Map';
+import ReviewMap from './components/ReviewMap';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Listing from './components/Listing';
@@ -77,7 +78,7 @@ function App() {
             
             {/* listed / review routes */} 
             <Route exact path="/list" />
-            <Route exact path="/reviews" /> 
+            <Route exact path="/reviews" component={ReviewMap}/> 
             <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token}/> }/>
             
             {/* user routes */}

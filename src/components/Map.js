@@ -84,7 +84,8 @@ const Map = () => {
   const defaultCenter = {
     // Wayfarer Pastry (bird rock)
     // lat: 32.81358038304886, lng: -117.2684223435255
-    lat: 32.730831, lng: -117.142586
+    lat: 32.730831, 
+    lng: -117.142586
   }
 
   const { isLoaded, loadError } = useLoadScript({
@@ -94,7 +95,7 @@ const Map = () => {
   //console.log(process.env.REACT_APP_TRANSPARENT_GOOGLE_KEY)
 
   if(loadError) return "load error"
-  if(!isLoaded) return "is loaded?"
+  if(!isLoaded) return "loading..."
 
   return (
     <GoogleMap 
