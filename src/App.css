@@ -59,3 +59,11 @@
 .review-user {
   justify-content: flex-end;
 }
+
+.favorites-container {
+  padding-top: 3em;
+}
+
+.space-between {
+  padding-bottom: 2em;
+}

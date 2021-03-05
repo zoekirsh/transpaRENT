@@ -34,7 +34,6 @@ const AddReview = ( props ) => {
       })
       .then(res => res.json())
       .then(data => props.setReviews([...props.reviews, data]))
-      //render to page
     } 
    
   }

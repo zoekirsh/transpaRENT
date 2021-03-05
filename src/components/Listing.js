@@ -18,16 +18,15 @@ const Listing = ( props ) => {
   console.log(props.user.user)
   console.log(listing)
 
-  ////// if listing obj not passed as prop, fetch listing,
-  ////// get all reviews with matching address
   useEffect(() => {
     if (!props.location.state) {
       fetchListing(props.match.params.id)
     }
     fetchReviews(listing.location.address.line)
+    isFavorite(listing.property_id)
   }, [] )
 
-
+  ////// on page load
   const fetchListing = (id) => {
     fetch(URL + id, {
       method: 'GET',
@@ -46,6 +45,25 @@ const Listing = ( props ) => {
     .then(res => res.json())
     .then(data => setReviews(data))
   }
+  
+  const isFavorite = (property_id) => {
+    const token = localStorage.token
+
+    if (token) {
+      fetch(faveURL + `/${property_id}`, {
+        headers: {
+          "Authorization" : `Bearer ${token}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          setFavorite(true)
+        }
+      })
+    }
+   
+  }
 
   //////REVIEWS 
   const renderReviews = () => {
@@ -54,7 +72,6 @@ const Listing = ( props ) => {
     )
   }
 
-      //CODE: 
       //disable button unless logged in? reroute to signup?
   const toggleReviewInput = () => {
     setReviewInput(!reviewInput)
@@ -86,7 +103,6 @@ const Listing = ( props ) => {
           setFavoriteId(data.favorite.id)
           setFavorite(!favorite)
         })
-        //props.addToFavorite(listing) ?
       }
   
       if (favorite) {
@@ -99,7 +115,6 @@ const Listing = ( props ) => {
         })
         .then(res => res.json())
         .then(setFavorite(!favorite))
-        //props.removeFromFavorites(listing)
         
       }
     }
