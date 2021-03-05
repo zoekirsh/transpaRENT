@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Card } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 
 const Fave = ( props ) => {
 
@@ -20,10 +20,17 @@ const Fave = ( props ) => {
     <div className="space-between">
       <Card fluid >
         <Card.Content>
-          <Card.Header>{props.fave.address}</Card.Header>
+          <Card.Header>
+            <Image
+              floated='left'
+              size='small'
+              src={props.fave.primary_photo}
+            />
+            {props.fave.address}
+            </Card.Header>
           <Card.Meta>{props.fave.beds} <span>{props.fave.type}</span>
           </Card.Meta>
-          <Card.Description>{props.fave.price}</Card.Description>
+          <Card.Meta>{props.fave.price}</Card.Meta>
         </Card.Content>
       </Card>
     </div>
