@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Fave from './Fave';
 import { Card } from 'semantic-ui-react';
 
 const Favorites = ( props ) => {
 
-  console.log(props) 
+  const URL = "http://localhost:3000/favorites"
+  
+  const [ favorites, setFavorites ] = useState([])
+
+  useEffect(() => {
+    fetchFavorites()
+  }, [])
+
+  const fetchFavorites = () => {
+    const token = localStorage.token 
+
+    if (token) {
+      fetch(URL, {
+        headers: {
+          "Authorization" : `Bearer ${token}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => console.log(setFavorites(data)))
+    }
+    
+  }
 
   const renderFavorites = () => {
-    if (props.favorites.length > 0) {
-      return props.favorites.map(fave => {
+    if (favorites.length > 0) {
+      return favorites.map(fave => {
         return (
           <Card.Group key={fave.property_id}>
-            <Fave history={"history"} fave={fave} />
+            <Fave fave={fave} />
           </Card.Group>
         )
       })

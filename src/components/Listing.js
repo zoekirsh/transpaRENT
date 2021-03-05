@@ -76,8 +76,22 @@ const Listing = ( props ) => {
   const toggleReviewInput = () => {
     setReviewInput(!reviewInput)
   } 
-  
 
+  const formatPrice = (min, max) => {
+    if ( min === max ) {
+      return `$${min}/mo`
+    } else {
+      return `$${min} - $${max}/mo`
+    }
+  }
+  
+  const formatBeds = (min, max) => {
+    if ( min === 0 ) {
+      min = "studio"
+    }
+
+    return `${min} - ${max}br`
+  }
   
   //////FAVORITE
   const toggleFavorite = () => {
@@ -95,7 +109,12 @@ const Listing = ( props ) => {
           },
           body: JSON.stringify( {
             user_id : props.user.user.id,
-            property_id: listing.property_id
+            property_id: listing.property_id,
+            primary_photo: listing.primary_photo.href,
+            address: listing.location.address.line,
+            price: formatPrice(listing.list_price_min, listing.list_price_max),
+            beds: formatBeds(listing.description.beds_min, listing.description.beds_max),
+            apartment: listing.description.type
           } )
         })
         .then(res => res.json())
