@@ -47,9 +47,16 @@
 
 .locate {
   position: absolute;
-  top: 10rem;
+  top: 9rem;
   right: 0%;
   z-index: 10;
+  width: 50px;
+  height: 50px;
+}
+
+.locate img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /* HOW DO I CENTER THIS? */

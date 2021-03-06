@@ -7,26 +7,31 @@ import ReviewMap from './components/ReviewMap';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Listing from './components/Listing';
-import Favorites from './components/Favorites'
+import MyFavorites from './components/MyFavorites'
+import MyReviews from './components/MyReviews';
+import Profile from './components/Profile';
 
 const URL = "http://localhost:3000"
 
 function App() {
 
   // state
-  const [ user, setUser ] = useState({ user: "i am the user"})
+  const [ user, setUser ] = useState({ user: "i am the user"});
   const [ token, setToken ] = useState("");
   const [ favorites, setFavorites ] = useState([]);
+  const [ reviews, setReviews ] = useState([]);
 
   //// get user on page load
   useEffect(() => {
     fetchUser()
     fetchFavorites()
+    fetchReviews()
   }, [])
 
   /////////////////////////////
   console.log(user, token)
-  console.log("favorites??", favorites)
+  //console.log("favorites??", favorites)
+  console.log("REviews!!", reviews)
   /////////////////////////////
 
   const fetchUser = () => {
@@ -59,6 +64,19 @@ function App() {
     }
   }
 
+  const fetchReviews = () => {
+    const token = localStorage.token
+    if (token) {
+      fetch(URL + '/myreviews', {
+        headers: {
+          "Authorization" : `Bearer ${token}`
+        },
+      })
+      .then(res => res.json())
+      .then(data => setReviews(data))
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem("token")
     setUser({ user: "Bye bye"})
@@ -84,9 +102,9 @@ function App() {
             {/* user routes */}
             {localStorage.token && ( 
               <>
-            <Route exact path="/profile" />
-            <Route exact path="/mylistings" render={(routerProps) => <Favorites {...routerProps} favorites={favorites}/>}/>
-            <Route exact path="/myreviews" />
+            <Route exact path="/profile" render={() => <Profile user={user} favorites={favorites} reviews={reviews}/>}/>
+            <Route exact path="/mylistings" render={(routerProps) => <MyFavorites {...routerProps} favorites={favorites}/>}/>
+            <Route exact path="/myreviews" component={MyReviews}/>
             <Route exact path="/logout" component={() => handleLogout()}/> 
             </>
             )}

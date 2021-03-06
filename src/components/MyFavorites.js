@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Fave from './Fave';
 import { Card } from 'semantic-ui-react';
 
-const Favorites = ( props ) => {
+const MyFavorites = ( props ) => {
 
   const URL = "http://localhost:3000/favorites"
   
@@ -53,4 +53,4 @@ const Favorites = ( props ) => {
   )
 }
 
-export default Favorites
+export default MyFavorites
