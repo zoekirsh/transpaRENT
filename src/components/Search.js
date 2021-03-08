@@ -4,7 +4,8 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption 
 import '@reach/combobox/styles.css';
 
 
-function Search( { panTo } ) {
+function Search( { panTo, setSelected, reviews } ) {
+
   const { 
     ready, 
     value, 
@@ -18,6 +19,19 @@ function Search( { panTo } ) {
     }
   })
 
+  const formatAddress = (addy) => {
+    return addy.split(",")[0]
+  }
+
+  const findReviews = (coord1, coord2) => {
+    const first = reviews.find(review => review.lat === coord1 && review.lng === coord2)
+    if (first) {
+      return `${first.text.substr(0, 10)}...`
+    } else {
+      return "Click here to leave the first review!"
+    }
+  }
+
   //getGeocode, getLatLng
   return (
     <div className="address-search">
@@ -29,12 +43,25 @@ function Search( { panTo } ) {
         try {
           const results = await getGeocode({ address })
           const { lat, lng } = await getLatLng(results[0])
+          //console.log(lat, lng)
+      
           panTo({ lat, lng })
+
+          setSelected({
+            lat: lat, 
+            lng: lng, 
+            address: formatAddress(address), 
+            text: findReviews(lat, lng)
+          })
+          //console.log(address)
+          
         } catch(error) {
           console.log("ERROR", error)
         }
 
+        //
         //console.log(address)
+        //
       }}
       >
       <ComboboxInput 
@@ -47,7 +74,7 @@ function Search( { panTo } ) {
       />
       <ComboboxPopover>
         <ComboboxList>
-          {status == "OK" && 
+          {status === "OK" && 
             data.map(({ id, description }) => (
               <ComboboxOption key={id} value={description}/>
             ))

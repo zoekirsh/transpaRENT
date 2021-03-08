@@ -86,7 +86,7 @@ function ReviewMap() {
   return (
     <div>
 
-      <Search panTo={panTo}/>
+      <Search panTo={panTo} setSelected={setSelected} reviews={reviews}/>
 
       <Locate panTo={panTo}/>
 
