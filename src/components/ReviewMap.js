@@ -77,6 +77,10 @@ function ReviewMap() {
     ))
   }
 
+  const formatText = (blah) => {
+    return `${blah.substr(0, 10)}...`
+  }
+
 
   if(loadError) return "error loading map"
   if(!isLoaded) return "loading map..."
@@ -105,7 +109,7 @@ function ReviewMap() {
             onCloseClick={() => setSelected(null)}>
             <div>
               <h2>{selected.address}</h2>
-              <p>{selected.text}</p>
+              <p>{formatText(selected.text)}</p>
             </div>
           </InfoWindow>) 
         }

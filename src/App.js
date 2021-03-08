@@ -104,7 +104,7 @@ function App() {
               <>
             <Route exact path="/profile" render={() => <Profile user={user} favorites={favorites} reviews={reviews}/>}/>
             <Route exact path="/mylistings" render={(routerProps) => <MyFavorites {...routerProps} favorites={favorites}/>}/>
-            <Route exact path="/myreviews" component={MyReviews}/>
+            <Route exact path="/myreviews" render={() => <MyReviews reviews={reviews}/>}/>
             <Route exact path="/logout" component={() => handleLogout()}/> 
             </>
             )}

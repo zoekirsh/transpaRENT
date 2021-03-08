@@ -90,6 +90,17 @@
   justify-content: flex-end;
 }
 
+.my-review-grid {
+  width: 600px;
+  margin-right: 50%;
+  margin-left: 30%;
+  padding-top: 5%;
+}
+
+.edit-btn {
+  padding-top: 50%;
+}
+
 .favorites-container {
   padding-top: 3em;
 }

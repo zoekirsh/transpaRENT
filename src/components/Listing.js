@@ -68,7 +68,7 @@ const Listing = ( props ) => {
   //////REVIEWS 
   const renderReviews = () => {
     return (
-      reviews.map(review => <Review review={review}/>)
+      reviews.map(review => <Review review={review} key={review.id}/>)
     )
   }
 
