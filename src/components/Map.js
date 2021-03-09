@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
 import { Icon } from 'semantic-ui-react';
 import Loading from './Loading';
 
 
-const Map = ({ favorites }) => {
-
-  //console.log(favorites)
-
-  const realtorAPIKey = "1a96c214bcmshee3d6c8642e6226p1fd718jsn6cc676cb3bae"
-  const realtorAPIHost = "realtor-com-real-estate.p.rapidapi.com"
-  const realtorAPIURL = "https://realtor-com-real-estate.p.rapidapi.com/for-rent?city=San%20Diego&state_code=CA&limit=100&offset=0&location=92037-6941"
+const Map = ({ favorites, listings }) => {
 
   //abstract city string & state code
   ////const city = "San Diego"
   ////const state = "CA"
 
   const [ selected, setSelected ] = useState({});
-  const [ locations, setLocations ] = useState([]);
   const history = useHistory()
 
   const onSelect = (item) => {
@@ -34,30 +27,12 @@ const Map = ({ favorites }) => {
     })
   }
 
-  //////get listings & mount 
-  useEffect(() => {
-    loadData()
-  }, [] )
-
-  const loadData = () => {
-    fetch(realtorAPIURL, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-key': realtorAPIKey,
-        'x-rapidapi-host' : realtorAPIHost
-      }
-    })
-    .then(res => res.json())
-    // .then(data => console.log(data.data.results))
-    .then(data => setLocations(data.data.results))
-  }
-
   const populateMap = () => {
-    if (locations.length > 0) {
+    if (listings.length > 0) {
       //
-      //console.log(locations)
+      //console.log(listings)
       //
-      return locations.map(place => {
+      return listings.map(place => {
         if (place.location?.address?.coordinate?.lat && place.location?.address?.coordinate?.lon) {
           return (
             <Marker key={place.description.name} 
@@ -71,6 +46,7 @@ const Map = ({ favorites }) => {
     })}
     else {
       console.log("not ready yet.")
+      return <Loading />
     }
   }
 
@@ -83,7 +59,7 @@ const Map = ({ favorites }) => {
   } 
  
 
-  ///////map tingz
+  ///////map formatting
   const mapStyles = {
     height: "100vh",
     width: "100%"
@@ -94,10 +70,8 @@ const Map = ({ favorites }) => {
     width: "75%"
   }
 
-  // set to: Balboa Park
+  //set to: Balboa Park
   const defaultCenter = {
-    // Wayfarer Pastry (bird rock)
-    // lat: 32.81358038304886, lng: -117.2684223435255
     lat: 32.730831, 
     lng: -117.142586
   }
@@ -111,8 +85,8 @@ const Map = ({ favorites }) => {
   if(loadError) return "load error"
   if(!isLoaded) return "loading..."
 
-  if (locations.length === 0) {
-    <Loading />
+  if (listings.length === 0) {
+    return <Loading />
   }
 
   return (

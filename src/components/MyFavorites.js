@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Fave from './Fave';
 import { Card } from 'semantic-ui-react';
 
-const MyFavorites = ( props ) => {
+const MyFavorites = () => {
 
   const URL = "http://localhost:3000/favorites"
   

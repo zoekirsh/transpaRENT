@@ -11,7 +11,14 @@ import MyFavorites from './components/MyFavorites'
 import MyReviews from './components/MyReviews';
 import Profile from './components/Profile';
 
+//base url 
 const URL = "http://localhost:3000"
+//realtor urls
+const realtorAPIKey = "1a96c214bcmshee3d6c8642e6226p1fd718jsn6cc676cb3bae"
+const realtorAPIHost = "realtor-com-real-estate.p.rapidapi.com"
+const realtorAPIURL = "https://realtor-com-real-estate.p.rapidapi.com/for-rent?city=San%20Diego&state_code=CA&limit=100&offset=0&location=92037-6941"
+
+
 
 function App() {
 
@@ -20,12 +27,14 @@ function App() {
   const [ token, setToken ] = useState("");
   const [ favorites, setFavorites ] = useState([]);
   const [ reviews, setReviews ] = useState([]);
+  const [ allListings, setAllListings ] = useState([]);
 
-  //// get user on page load
+  //// get user & listings on page load
   useEffect(() => {
     fetchUser()
     fetchFavorites()
     fetchReviews()
+    fetchListings()
   }, [])
 
   /////////////////////////////
@@ -34,6 +43,7 @@ function App() {
   console.log("REviews!!", reviews)
   /////////////////////////////
 
+  //////fetch all user data
   const fetchUser = () => {
     const token = localStorage.token
     if (token) {
@@ -77,6 +87,21 @@ function App() {
     }
   }
 
+  //////fetch listings from external API
+  const fetchListings = () => {
+    fetch(realtorAPIURL, {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': realtorAPIKey,
+        'x-rapidapi-host' : realtorAPIHost
+      }
+    })
+    .then(res => res.json())
+    // .then(data => console.log(data.data.results))
+    .then(data => setAllListings(data.data.results))
+  }
+
+
   const handleLogout = () => {
     localStorage.removeItem("token")
     setUser({ user: "Bye bye"})
@@ -90,13 +115,13 @@ function App() {
         <div className="Main">
           <Navbar user={ user }/>
           <Switch>
-            <Route exact path="/" render={() => <Map favorites={favorites}/>}/>
+            <Route exact path="/" render={() => <Map favorites={favorites} listings={allListings}/>}/>
             <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
             <Route exact path="/signup" render={() => <Signup setUser={setUser}/>}/>
             
             {/* listed / review routes */} 
             <Route exact path="/list" />
-            <Route exact path="/reviews" component={ReviewMap}/> 
+            <Route exact path="/reviews" render={() => <ReviewMap allListings={allListings}/>}/> 
             <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token} setReviews={setReviews}/> }/>
             
             {/* user routes */}

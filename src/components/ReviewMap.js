@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
 import Locate from './Locate';
 import Search from './Search';
@@ -21,11 +22,12 @@ const options = {
   zoomControl: true,
 }
 
-function ReviewMap() {
+function ReviewMap( { allListings } ) {
 
   const [ reviews, setReviews ] = useState([])
   const [ markers, setMarkers ] = useState([])
   const [ selected, setSelected ] = useState(null)
+  const history = useHistory()
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_TRANSPARENT_GOOGLE_KEY,
@@ -36,6 +38,7 @@ function ReviewMap() {
     fetchReviews()
   }, [])
 
+  //////fetch all reviews in db
   const fetchReviews = () => {
     fetch(reviewURL)
     .then(res => res.json())
@@ -82,6 +85,36 @@ function ReviewMap() {
   }
 
 
+  const handleWindowClick = () => {
+    console.log("handle window click")
+
+    //look for active listing
+    const active = allListings.find(listing => 
+      listing.location.address?.coordinate?.lat === selected.lat && 
+      listing.location.address?.coordinate?.lon === selected.lng
+      )
+
+    console.log(active)
+
+    if (active) {
+      history.push({
+        pathname: `/viewlisting/${active.property_id}`,
+        state: {
+          listing: active
+        }
+      })
+    } else {
+      history.push({
+        pathname: `/viewlisting/${selected.id}`,
+        state: {
+          nolisting: true,
+          review: selected.address
+        }
+      })
+    }
+  }
+
+
   if(loadError) return "error loading map"
   if(!isLoaded) return "loading map..."
 
@@ -106,8 +139,10 @@ function ReviewMap() {
         {selected &&
           (<InfoWindow
             position={{lat: selected.lat, lng: selected.lng}}
-            onCloseClick={() => setSelected(null)}>
-            <div>
+            onCloseClick={() => setSelected(null)}
+            clickable={true}
+            >
+            <div onClick={() => handleWindowClick()}>
               <h2>{selected.address}</h2>
               <p>{formatText(selected.text)}</p>
             </div>

@@ -4,9 +4,11 @@ import AddReview from './AddReview';
 import Review from './Review';
 import Loading from './Loading';
 import ImageCarousel from './ImageCarousel';
+import NoListing from './NoListing';
 
 const Listing = ( props ) => {
 
+  const [ absent, setAbsent ] = useState(false)
   const [ listing, setListing ] = useState(props.location.state.listing)
   const [ reviews, setReviews ] = useState([])
   const [ reviewInput, setReviewInput ] = useState(false)
@@ -23,21 +25,21 @@ const Listing = ( props ) => {
 
   useEffect(() => {
     console.log("STATE nested listing", props.location.state.listing)
-    
-    // if (props.location.state.listing) {
-    //   fetchReviews(listing.location.address.line)
-    //   isFavorite(listing.property_id)
-    // } else {
-    //   fetchListing(props.match.params.id)
-    // }
-
 
     if (!props.location.state.listing) {
+      if (props.location.state.nolisting) { 
+        return handleNoListing() 
+      }
       return fetchListing(props.match.params.id)
     }
     fetchReviews(props.location.state.listing.location.address.line)
     isFavorite(props.location.state.listing.property_id)
   }, [] )
+
+  const handleNoListing = () => {
+    fetchReviews(props.location.state.review)
+    setAbsent(true)
+  }
 
   ////// on page load
   const fetchListing = (id) => {
@@ -111,7 +113,7 @@ const Listing = ( props ) => {
     return `${min} - ${max}br`
   }
   
-  //////FAVORITE
+  ////// ADD / REMOVE FAVORITE
   const toggleFavorite = () => {
  
     const token = localStorage.token
@@ -166,55 +168,62 @@ const Listing = ( props ) => {
     props.location.state.href 
   }
 
-  if (!listing) {
+  if (!listing && !absent) {
     return <Loading />
   }
 
   return (
-    <div>
-      <h2>{listing?.description?.name} {favorite 
-        ? <Icon name='heart' onClick={toggleFavorite} /> 
-        : <Icon name='heart outline' onClick={toggleFavorite} />}
-      </h2>
+    <div className="parent-container">
+
+      {absent 
+      ? <NoListing /> 
+      :  <div className="listing-container">
+          <h2>{listing?.description?.name} {favorite 
+            ? <Icon name='heart' onClick={toggleFavorite} /> 
+            : <Icon name='heart outline' onClick={toggleFavorite} />}
+          </h2>
+          
+          <div className="listing_images">
+            <ImageCarousel primary={primaryPhoto()} images={listing.photos}/>
+            {/* <img src={primaryPhoto()} alt="property primary"></img> */}
+          </div>
+
+          <div id="listing_deets"> 
+            {listing?.list_price_min === listing?.list_price_max 
+              ? <h1>{listing?.list_price_min}</h1>
+              : <h1>${listing?.list_price_min} - ${listing?.list_price_max}/mo</h1>
+            }
+
+            {listing?.description?.beds_min === listing?.description?.beds_max 
+              ? <h3>{listing?.description?.beds_min} br</h3>
+              : <h3>{listing?.description?.beds_min === 0 
+                ? ("studio") 
+                : (listing?.description?.beds_min)} - {listing?.description?.beds_max} br
+                </h3>
+            }
       
-      <div className="listing_images">
-        <ImageCarousel primary={primaryPhoto()} images={listing.photos}/>
-        {/* <img src={primaryPhoto()} alt="property primary"></img> */}
-      </div>
+            {listing?.description?.baths_min === listing?.description?.baths_max 
+              ? <h3>{listing?.description?.baths_min}</h3>
+              : <h3>{listing?.description?.baths_min} - {listing?.description?.baths_max} bath</h3>
+            }
 
-      <div id="listing_deets"> 
-        {listing?.list_price_min === listing?.list_price_max 
-          ? <h1>{listing?.list_price_min}</h1>
-          : <h1>${listing?.list_price_min} - ${listing?.list_price_max}/mo</h1>
-        }
+            {listing?.description?.sqft_min === listing?.description?.sqft_max 
+              ? <h4>{listing?.description?.sqft_min}</h4>
+              : <h4>{listing?.description?.sqft_min} - {listing?.description?.sqft_max} sqft</h4>
+            }
 
-        {listing?.description?.beds_min === listing?.description?.beds_max 
-          ? <h3>{listing?.description?.beds_min} br</h3>
-          : <h3>{listing?.description?.beds_min === 0 
-            ? ("studio") 
-            : (listing?.description?.beds_min)} - {listing?.description?.beds_max} br
-            </h3>
-        }
-  
-        {listing?.description?.baths_min === listing?.description?.baths_max 
-          ? <h3>{listing?.description?.baths_min}</h3>
-          : <h3>{listing?.description?.baths_min} - {listing?.description?.baths_max} bath</h3>
-        }
+            <p>{listing?.location?.address?.line}, {listing?.location?.address?.city}</p>
+            <p>Built in {listing?.description?.year_built}</p>
+            <p>*{listing?.pet_policy?.cats && listing?.pet_policy?.dogs 
+              ? ("allows pets") 
+              : ("does not allow pets")}*
+            </p>
+          </div>
 
-        {listing?.description?.sqft_min === listing?.description?.sqft_max 
-          ? <h4>{listing?.description?.sqft_min}</h4>
-          : <h4>{listing?.description?.sqft_min} - {listing?.description?.sqft_max} sqft</h4>
-        }
+        </div>
+      }
 
-        <p>{listing?.location?.address?.line}, {listing?.location?.address?.city}</p>
-        <p>Built in {listing?.description?.year_built}</p>
-        <p>*{listing?.pet_policy?.cats && listing?.pet_policy?.dogs 
-          ? ("allows pets") 
-          : ("does not allow pets")}*
-        </p>
-      
-      </div>
-        <hr></hr>
+      <hr></hr>
         
       <div className="reviews-container">
         <h3>Reviews</h3>
