@@ -112,7 +112,7 @@ const Map = ({ favorites }) => {
   if(!isLoaded) return "loading..."
 
   if (locations.length === 0) {
-    <Loading />
+    return <Loading />
   }
 
   return (
