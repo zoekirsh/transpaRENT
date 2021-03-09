@@ -90,7 +90,7 @@ function App() {
         <div className="Main">
           <Navbar user={ user }/>
           <Switch>
-            <Route exact path="/" render={() => <Map />}/>
+            <Route exact path="/" render={() => <Map favorites={favorites}/>}/>
             <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
             <Route exact path="/signup" render={() => <Signup setUser={setUser}/>}/>
             

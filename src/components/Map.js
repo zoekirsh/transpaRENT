@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
+import { Icon } from 'semantic-ui-react';
 import Loading from './Loading';
 
 
-const Map = () => {
+const Map = ({ favorites }) => {
+
+  //console.log(favorites)
 
   const realtorAPIKey = "1a96c214bcmshee3d6c8642e6226p1fd718jsn6cc676cb3bae"
   const realtorAPIHost = "realtor-com-real-estate.p.rapidapi.com"
@@ -70,6 +73,14 @@ const Map = () => {
       console.log("not ready yet.")
     }
   }
+
+  const isFavorite = () => {
+    if (favorites.find(fave => fave.property_id.toString() === selected.property_id)) {
+      return <Icon name='heart'/>
+    } else {
+      return <Icon name='heart outline'/>
+    }
+  } 
  
 
   ///////map tingz
@@ -123,7 +134,7 @@ const Map = () => {
             onCloseClick={() => setSelected({})}
             >
               <div>
-                <h5>{selected.description.name}</h5>
+                <h5>{selected.description.name} <span>{isFavorite()}</span></h5>
                 {
                   selected.description.beds_min === selected.description.beds_max
                   ? <p>{selected.description.beds_min} bed</p>

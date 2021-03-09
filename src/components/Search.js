@@ -28,7 +28,7 @@ function Search( { panTo, setSelected, reviews } ) {
     if (first) {
       return `${first.text.substr(0, 10)}...`
     } else {
-      return "Click here to leave the first review!"
+      return "Add a review"
     }
   }
 

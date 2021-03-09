@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Button, Icon } from 'semantic-ui-react';
+import EditReview from './EditReview';
 
 const URL = "http://localhost:3000/reviews"
 
 function MyReviews( { reviews, setReviews }) {
-
   //
   console.log(reviews)
   //
 
+  const [ edit, setEdit ] = useState(null)
+  const [ selected, setSelected ] = useState(null)
+
   //////EDIT REVIEW
+  const editClick = (obj) => {
+    setSelected(obj)
+    setEdit(true)
+  }
+
+  const editReview = (review) => {
+    const token = localStorage.token
+
+    const newReviews = reviews.filter(rev => rev.id !== selected.id)
+
+    fetch(URL + `/${selected.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type' : 'application/json',
+        'Accepts' : 'application/json',
+        "Authorization" : `Bearer ${token}`
+      },
+      body: JSON.stringify( review )
+    })
+    .then(res => res.json())
+    .then(data => {
+      setReviews([data.review, ...newReviews])
+      setEdit(false)
+    })
+
+  }
 
 
   //////DELETE REVIEW
@@ -28,6 +57,10 @@ function MyReviews( { reviews, setReviews }) {
     .then(setReviews(newReviews))
   }
 
+  if (edit) {
+    return <EditReview review={selected} editReview={editReview} />
+  }
+
   return (
     <div>
       <h3>My reviews</h3>
@@ -44,7 +77,7 @@ function MyReviews( { reviews, setReviews }) {
             <Grid.Column floated="left" width={1}>
 
               <Button.Group>
-                <Button basic size="mini" animated="vertical" className="edit-btn">
+                <Button basic size="mini" animated="vertical" className="edit-btn" onClick={() => editClick(review)}>
                   <Button.Content hidden>
                     Edit
                   </Button.Content>
