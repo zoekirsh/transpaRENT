@@ -22,7 +22,7 @@ const MyFavorites = ( props ) => {
         }
       })
       .then(res => res.json())
-      .then(data => console.log(setFavorites(data)))
+      .then(data => setFavorites(data))
     }
     
   }

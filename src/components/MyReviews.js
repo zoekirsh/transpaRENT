@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, Button, Icon } from 'semantic-ui-react';
 
 const URL = "http://localhost:3000/reviews"
 
-function MyReviews( { reviews }) {
+function MyReviews( { reviews, setReviews }) {
 
-  const [ deleted, setDeleted ] = useState(0)
   //
   console.log(reviews)
   //
@@ -16,6 +15,9 @@ function MyReviews( { reviews }) {
   //////DELETE REVIEW
   const deleteReview = (id) => {
     const token = localStorage.token
+
+    const newReviews = reviews.filter(review => review.id !== id)
+
     fetch(URL + `/${id}`, {
       method: 'DELETE',
       headers: {
@@ -23,12 +25,12 @@ function MyReviews( { reviews }) {
       }
     })
     .then(res => res.json())
-    .then(setDeleted(deleted + 1))
+    .then(setReviews(newReviews))
   }
 
   return (
     <div>
-      <h2>You have written...</h2>
+      <h3>My reviews</h3>
       <div className="my-review-grid">
         <Grid>
         {reviews.map(review => 

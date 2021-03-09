@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
+import Loading from './Loading';
 
 
 const Map = () => {
@@ -24,7 +25,9 @@ const Map = () => {
   const goToShowPage = (id) => {
     history.push({
       pathname: `/viewlisting/${id}`,
-      state: selected
+      state: {
+        listing: selected
+      }
     })
   }
 
@@ -96,6 +99,10 @@ const Map = () => {
 
   if(loadError) return "load error"
   if(!isLoaded) return "loading..."
+
+  if (locations.length === 0) {
+    <Loading />
+  }
 
   return (
     <GoogleMap 

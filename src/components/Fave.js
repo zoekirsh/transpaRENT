@@ -5,20 +5,21 @@ import { Card, Image } from 'semantic-ui-react';
 const Fave = ( props ) => {
 
   //console.log("FAVE!", props) 
-
+  const history = useHistory();
   
   ///////onClick for card
-
-  // const goToShowPage = (property_id) => {
-  //   history.push({
-  //     pathname: `/viewlisting/${property_id}`,
-  //     state: props.fave.primary_photo
-  //   })
-  // }
+  const goToShowPage = (property_id) => {
+    history.push({
+      pathname: `/viewlisting/${property_id}`,
+      state: {
+        href: props.fave.primary_photo
+      }
+    })
+  }
   
   return (
     <div className="space-between">
-      <Card fluid >
+      <Card fluid onClick={() => goToShowPage(props.fave.property_id)}>
         <Card.Content>
           <Card.Header>
             <Image

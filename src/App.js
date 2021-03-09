@@ -97,14 +97,14 @@ function App() {
             {/* listed / review routes */} 
             <Route exact path="/list" />
             <Route exact path="/reviews" component={ReviewMap}/> 
-            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token}/> }/>
+            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token} setReviews={setReviews}/> }/>
             
             {/* user routes */}
             {localStorage.token && ( 
               <>
             <Route exact path="/profile" render={() => <Profile user={user} favorites={favorites} reviews={reviews}/>}/>
             <Route exact path="/mylistings" render={(routerProps) => <MyFavorites {...routerProps} favorites={favorites}/>}/>
-            <Route exact path="/myreviews" render={() => <MyReviews reviews={reviews}/>}/>
+            <Route exact path="/myreviews" render={() => <MyReviews reviews={reviews} setReviews={setReviews}/>}/>
             <Route exact path="/logout" component={() => handleLogout()}/> 
             </>
             )}

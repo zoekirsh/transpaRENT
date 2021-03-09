@@ -12,11 +12,13 @@ const AddReview = ( props ) => {
     user_id: props.user.id, 
     city: props.listing.location.address.city, 
     state: props.listing.location.address.state_code, 
-    zipcode: props.listing.location.address.postal_code 
+    zipcode: props.listing.location.address.postal_code,
+    lat: props.listing.location.address.coordinate.lat,
+    lng: props.listing.location.address.coordinate.lon
   })
 
-  // console.log(reviewDetails)
-  // console.log(props.user)
+  //console.log(reviewDetails)
+  //console.log("Props.reviews @ Add Review", props.reviews)
 
 
   const createReview = (e) => {
@@ -33,7 +35,11 @@ const AddReview = ( props ) => {
         body: JSON.stringify( reviewDetails )
       })
       .then(res => res.json())
-      .then(data => props.setReviews([...props.reviews, data]))
+      .then(data => {
+        props.setReviewsListing([...props.reviews, data.review])
+        props.setReviewsApp([...props.reviews, data.review])
+        props.setReviewInput(false)
+      })
     } 
    
   }

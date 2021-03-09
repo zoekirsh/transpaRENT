@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button, Icon } from 'semantic-ui-react'; 
 import AddReview from './AddReview';
 import Review from './Review';
+import Loading from './Loading';
 
 const Listing = ( props ) => {
 
-  const [ listing, setListing ] = useState(props.location.state)
+  const [ listing, setListing ] = useState(props.location.state.listing)
   const [ reviews, setReviews ] = useState([])
   const [ reviewInput, setReviewInput ] = useState(false)
   const [ favorite, setFavorite ] = useState(false)
@@ -15,19 +16,31 @@ const Listing = ( props ) => {
   const faveURL = "http://localhost:3000/favorites"
   const reviewURL = "http://localhost:3000/getreviews"
 
-  console.log(props.user.user)
-  console.log(listing)
+  //console.log(props.user.user)
+  //console.log(listing)
+  console.log("Reviews from listing =>", reviews)
 
   useEffect(() => {
-    if (!props.location.state) {
-      fetchListing(props.match.params.id)
+    console.log("STATE nested listing", props.location.state.listing)
+    
+    // if (props.location.state.listing) {
+    //   fetchReviews(listing.location.address.line)
+    //   isFavorite(listing.property_id)
+    // } else {
+    //   fetchListing(props.match.params.id)
+    // }
+
+
+    if (!props.location.state.listing) {
+      return fetchListing(props.match.params.id)
     }
-    fetchReviews(listing.location.address.line)
-    isFavorite(listing.property_id)
+    fetchReviews(props.location.state.listing.location.address.line)
+    isFavorite(props.location.state.listing.property_id)
   }, [] )
 
   ////// on page load
   const fetchListing = (id) => {
+    console.log("bingo")
     fetch(URL + id, {
       method: 'GET',
       headers: {
@@ -36,7 +49,11 @@ const Listing = ( props ) => {
       }
     })
     .then(res => res.json())
-    .then(data => setListing(data.data))
+    .then(data => {
+      setListing(data.data)
+      fetchReviews(data.data.location.address.line)
+      isFavorite(data.data.property_id)
+    })
   }
 
 
@@ -140,44 +157,56 @@ const Listing = ( props ) => {
     
   }
 
+  const primaryPhoto = () => {
+    console.log("HERE!!!", props.location.state)
+    return listing?.primary_photo ? 
+    listing?.primary_photo.href
+    :
+    props.location.state.href 
+  }
+
+  if (!listing) {
+    return <Loading />
+  }
+
   return (
     <div>
-      <h2>{listing.description.name} {favorite 
+      <h2>{listing?.description?.name} {favorite 
         ? <Icon name='heart' onClick={toggleFavorite} /> 
         : <Icon name='heart outline' onClick={toggleFavorite} />}
       </h2>
       
       <div className="listing_images">
-        <img src={listing.primary_photo.href} alt="property primary"></img>
+        <img src={primaryPhoto()} alt="property primary"></img>
       </div>
 
       <div id="listing_deets"> 
-        {listing.list_price_min === listing.list_price_max 
-          ? <h1>{listing.list_price_min}</h1>
-          : <h1>${listing.list_price_min} - ${listing.list_price_max}/mo</h1>
+        {listing?.list_price_min === listing?.list_price_max 
+          ? <h1>{listing?.list_price_min}</h1>
+          : <h1>${listing?.list_price_min} - ${listing?.list_price_max}/mo</h1>
         }
 
-        {listing.description.beds_min === listing.description.beds_max 
-          ? <h3>{listing.description.beds_min} br</h3>
-          : <h3>{listing.description.beds_min === 0 
+        {listing?.description?.beds_min === listing?.description?.beds_max 
+          ? <h3>{listing?.description?.beds_min} br</h3>
+          : <h3>{listing?.description?.beds_min === 0 
             ? ("studio") 
-            : (listing.description.beds_min)} - {listing.description.beds_max} br
+            : (listing?.description?.beds_min)} - {listing?.description?.beds_max} br
             </h3>
         }
   
-        {listing.description.baths_min === listing.description.baths_max 
-          ? <h3>{listing.description.baths_min}</h3>
-          : <h3>{listing.description.baths_min} - {listing.description.baths_max} bath</h3>
+        {listing?.description?.baths_min === listing?.description?.baths_max 
+          ? <h3>{listing?.description?.baths_min}</h3>
+          : <h3>{listing?.description?.baths_min} - {listing?.description?.baths_max} bath</h3>
         }
 
-        {listing.description.sqft_min === listing.description.sqft_max 
-          ? <h4>{listing.description.sqft_min}</h4>
-          : <h4>{listing.description.sqft_min} - {listing.description.sqft_max} sqft</h4>
+        {listing?.description?.sqft_min === listing?.description?.sqft_max 
+          ? <h4>{listing?.description?.sqft_min}</h4>
+          : <h4>{listing?.description?.sqft_min} - {listing?.description?.sqft_max} sqft</h4>
         }
 
-        <p>{listing.location.address.line}, {listing.location.address.city}</p>
-        <p>Built in {listing.description.year_built}</p>
-        <p>*{listing.pet_policy?.cats && listing.pet_policy?.dogs 
+        <p>{listing?.location?.address?.line}, {listing?.location?.address?.city}</p>
+        <p>Built in {listing?.description?.year_built}</p>
+        <p>*{listing?.pet_policy?.cats && listing?.pet_policy?.dogs 
           ? ("allows pets") 
           : ("does not allow pets")}*
         </p>
@@ -196,7 +225,7 @@ const Listing = ( props ) => {
           
           {reviewInput === false 
             ? <Button basic color="grey" content="Write Review" onClick={toggleReviewInput}/>
-            : <AddReview listing={listing} user={props.user.user} token={props.token} setReviews={setReviews} reviews={reviews}/>
+            : <AddReview listing={listing} user={props.user.user} setReviewsListing={setReviews} setReviewsApp={props.setReviews} setReviewInput={setReviewInput} reviews={reviews}/>
           }
           
         </div>
