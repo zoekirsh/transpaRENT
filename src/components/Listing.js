@@ -3,6 +3,7 @@ import { Button, Icon } from 'semantic-ui-react';
 import AddReview from './AddReview';
 import Review from './Review';
 import Loading from './Loading';
+import ImageCarousel from './ImageCarousel';
 
 const Listing = ( props ) => {
 
@@ -17,8 +18,8 @@ const Listing = ( props ) => {
   const reviewURL = "http://localhost:3000/getreviews"
 
   //console.log(props.user.user)
-  //console.log(listing)
-  console.log("Reviews from listing =>", reviews)
+  console.log("Listing=", listing)
+  //console.log("Reviews from listing =>", reviews)
 
   useEffect(() => {
     console.log("STATE nested listing", props.location.state.listing)
@@ -158,7 +159,7 @@ const Listing = ( props ) => {
   }
 
   const primaryPhoto = () => {
-    console.log("HERE!!!", props.location.state)
+    //console.log("HERE!!!", props.location.state)
     return listing?.primary_photo ? 
     listing?.primary_photo.href
     :
@@ -177,7 +178,8 @@ const Listing = ( props ) => {
       </h2>
       
       <div className="listing_images">
-        <img src={primaryPhoto()} alt="property primary"></img>
+        <ImageCarousel primary={primaryPhoto()} images={listing.photos}/>
+        {/* <img src={primaryPhoto()} alt="property primary"></img> */}
       </div>
 
       <div id="listing_deets"> 
