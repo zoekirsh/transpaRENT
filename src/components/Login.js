@@ -40,6 +40,7 @@ const Login = ({ setUser }) => {
   }
 
   return (
+    <div className="login-container">
     <div className="center">
       <Form className="center" onSubmit={handleSubmit} style={{ margin: 100 }}>
         <Form.Field>
@@ -62,6 +63,10 @@ const Login = ({ setUser }) => {
           <Button type="submit">Login</Button>
       </Form>
     </div>
+    <div className="login-link">
+      <a href={"http://localhost:3001/login"}>New here? Sign up</a>
+    </div>
+   </div>
   )
 }
 

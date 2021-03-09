@@ -66,30 +66,39 @@ const Signup = ({ setUser }) => {
   ]
 
   return (
-    <div className="signup">
-      <Form onSubmit={handleSubmit} style={{ margin: 100 }}>
-        <Form.Group className="username-password">
-          <Form.Field control={Input} onChange={handleInputChange} label='Username' name="username" value={inputs.username} placeholder='Username' width={5} required/>
-          <Form.Field control={Input} onChange={handleInputChange} type="password" label='Password' name="password" value={inputs.password} placeholder='Password' width={5} required/>
-        </Form.Group>
+    <div className="signup-container">
+      <div className="signup">
+        <Form onSubmit={handleSubmit} style={{ margin: 100 }}>
+          <Form.Group className="username-password">
+            <Form.Field control={Input} onChange={handleInputChange} label='Username' name="username" value={inputs.username} placeholder='Username' required/>
+            <Form.Field control={Input} onChange={handleInputChange} type="password" label='Password' name="password" value={inputs.password} placeholder='Password' required/>
+          </Form.Group>
 
-        <Form.Group className="name-email">
-          <Form.Field control={Input} onChange={handleInputChange} label='First Name' name="name" value={inputs.name} placeholder='Name' width={4} required/>
-          <Form.Field control={Input} onChange={handleInputChange} label='Email' name="email" value={inputs.email} placeholder='example@gmail.com' width={6} required/>
-        </Form.Group>
+          <Form.Group className="name-email">
+            <Form.Field control={Input} onChange={handleInputChange} label='First Name' name="name" value={inputs.name} placeholder='Name' required/>
+            <Form.Field control={Input} onChange={handleInputChange} label='Email' name="email" value={inputs.email} placeholder='example@gmail.com' required/>
+          </Form.Group>
 
-        <Form.Group className="city-state">
-          <Form.Field control={Input} onChange={handleInputChange} label='City' name="city" value={inputs.city} placeholder='City' width={4} required/>
-          <Form.Field required>
-            <label>State</label>
-            <Dropdown selection options={states} onChange={handleSelect} label='State' name="state" value={inputs.state} placeholder='State' width={1}/>
-          </Form.Field>
-        </Form.Group>
+          <Form.Group className="city-state">
+            <Form.Field control={Input} onChange={handleInputChange} label='City' name="city" value={inputs.city} placeholder='City' required/>
+            <Form.Field required>
+              <label>State</label>
+              <Dropdown selection options={states} onChange={handleSelect} label='State' name="state" value={inputs.state} placeholder='State' required/>
+            </Form.Field>
+          </Form.Group>
 
-        <Form.Field control={Button}>Submit</Form.Field>
-      </Form>
+          <Form.Field control={Button}>Submit</Form.Field>
+        </Form>
+      </div>
+      <div className="login-link">
+        <a href={"http://localhost:3001/login"}>Already have an account?</a>
+      </div>
+
     </div>
+    
   )
+    
+    
 }
 
 export default Signup

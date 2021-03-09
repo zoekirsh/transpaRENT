@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Menu, Dropdown } from 'semantic-ui-react';
+import { Menu, Dropdown } from 'semantic-ui-react';
 import '../App.css';
-
-///CODE: dropdown for list view / map view
 
 const Navbar = ( { user } ) => {
 
@@ -17,16 +15,12 @@ const Navbar = ( { user } ) => {
     margin: "0 100px 0"
   }
 
-  // const right = {
-  //   "justify-content": "flex-end"
-  // }
-
   //handleToggleDropdownMenu
   ///// this function will toggle the dropdown menu functionality
 
   return (
-    <Grid columns={3}>
-      <Grid.Column className="left-nav">
+    <div className="nav-container">
+      <div className="left-nav">
        <Menu text fluid stackable style={{ margin: 20 }}>
           <Link to="/">
             <Menu.Item
@@ -46,10 +40,10 @@ const Navbar = ( { user } ) => {
             </Menu.Item>
           </Link>
         </Menu>
-      </Grid.Column>
+      </div>
      
       {/* logo */}
-      <Grid.Column>
+      <div className="center-nav">
         <Menu text fluid stackable style={{ margin: 20 }}>
           <Link to="/">
             <Menu.Item
@@ -61,13 +55,13 @@ const Navbar = ( { user } ) => {
             </Menu.Item>
           </Link>
         </Menu>
-      </Grid.Column>
+      </div>
         
 
       {/* logged in ? YES : NO */}
       {!user.user.id ? (
         <>
-          <Grid.Column>
+          <div className="right-nav">
             <Menu text fluid stackable style={{ margin: 20 }}>
               <Link to="/login">
                 <Menu.Item
@@ -87,12 +81,12 @@ const Navbar = ( { user } ) => {
                   </Menu.Item>
               </Link>
             </Menu>
-          </Grid.Column>
+          </div>
         </>
       ) : (
         <>
-          <Grid.Column id="right-nav">
-            <Menu text fluid stackable style={{ margin: 20 }}>
+          <div className="right-nav">
+            <Menu text fluid stackable style={{ margin: 20 }} id="right-nav">
               <Dropdown
                 item
                 text={user.user.name}
@@ -110,21 +104,26 @@ const Navbar = ( { user } ) => {
                   </Dropdown.Menu>
               </Dropdown>
 
+              <div>
+                <Link to="/logout">
+                  <Menu.Item
+                    name="logout"
+                    style={nav}
+                    >
+                      logout
+                  </Menu.Item>
+                </Link>
+              </div>
               
-              <Link to="/logout">
-                <Menu.Item
-                  name="logout"
-                  style={nav}
-                  >
-                    logout
-                </Menu.Item>
-              </Link>
             </Menu>
-          </Grid.Column>
+          </div>
         </>
       ) }
 
-    </Grid>
+ 
+
+    </div>
+    
   )
 }
 

@@ -22,11 +22,36 @@
 }
 
 .center {
-  text-align: left;
+  /* text-align: left; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.contents-end {
+  justify-content: flex-end;
+}
+
+.nav-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between !important;
+}
+
+.left-nav {
+  justify-content: flex-start;
+  width: 300px;
+}
+
+.right-nav {
+  width: 300px;
+}
+
+#right-nav {
+  justify-content: flex-end !important;
+  padding-right: 40px;
 }
 
 .address-search {
@@ -62,10 +87,13 @@
 /* HOW DO I CENTER THIS? */
 .signup {
   justify-content: center;
+  display: flex;
+  /* margin: 0, 100; */
+  align-items: flex-end;
 }
 
-#right-nav {
-  justify-content: flex-end;
+.login-link a {
+  color: grey;
 }
 
 .reviews-container { 

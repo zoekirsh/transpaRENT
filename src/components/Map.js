@@ -70,10 +70,10 @@ const Map = ({ favorites, listings }) => {
     width: "75%"
   }
 
-  //set to: Balboa Park
+  //set to: Old Town San Diego
   const defaultCenter = {
-    lat: 32.730831, 
-    lng: -117.142586
+    lat: 32.748950, 
+    lng: -117.192580
   }
 
   const { isLoaded, loadError } = useLoadScript({

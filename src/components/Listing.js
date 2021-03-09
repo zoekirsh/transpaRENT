@@ -7,6 +7,7 @@ import ImageCarousel from './ImageCarousel';
 import NoListing from './NoListing';
 
 const Listing = ( props ) => {
+  console.log(props)
 
   const [ absent, setAbsent ] = useState(false)
   const [ listing, setListing ] = useState(props.location.state.listing)
@@ -185,7 +186,6 @@ const Listing = ( props ) => {
           
           <div className="listing_images">
             <ImageCarousel primary={primaryPhoto()} images={listing.photos}/>
-            {/* <img src={primaryPhoto()} alt="property primary"></img> */}
           </div>
 
           <div id="listing_deets"> 
@@ -235,7 +235,10 @@ const Listing = ( props ) => {
           }
           
           {reviewInput === false 
-            ? <Button basic color="grey" content="Write Review" onClick={toggleReviewInput}/>
+            ? (typeof(props.user.user) === "string" 
+              ? <Button disabled content="Log in to review" /> 
+              : <Button basic color="grey" content="Write Review" onClick={toggleReviewInput}/>
+              )
             : <AddReview listing={listing} user={props.user.user} setReviewsListing={setReviews} setReviewsApp={props.setReviews} setReviewInput={setReviewInput} reviews={reviews}/>
           }
           
