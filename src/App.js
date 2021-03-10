@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer'; 
 import Map from './components/Map';
 import ReviewMap from './components/ReviewMap';
 import Signup from './components/Signup';
@@ -139,9 +140,10 @@ function App() {
             )}
 
           </Switch>
+          {/* <Footer /> */}
         </div>
       </main>
-      <footer></footer>
+      <Footer />
     </div>
   );
 }

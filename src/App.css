@@ -17,6 +17,25 @@
   color: #61dafb;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  color: grey;
+  width: 100%;
+  min-height: 2rem;
+}
+
+.icon-container {
+  width: 200px;
+}
+
+.footer-icons span {
+  margin: 1rem;
+}
+
 .blue {
   color: #61dafb;
 }
@@ -91,7 +110,6 @@
   max-width: 100%;
   max-height: 100%;
 }
-
 
 .signup {
   justify-content: center;
