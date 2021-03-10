@@ -59,7 +59,7 @@ const Navbar = ( { user } ) => {
         
 
       {/* logged in ? YES : NO */}
-      {!user.user.id ? (
+      {!user.user?.id ? (
         <>
           <div className="right-nav">
             <Menu text fluid stackable style={{ margin: 20 }}>

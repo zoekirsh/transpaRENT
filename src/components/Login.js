@@ -32,6 +32,10 @@ const Login = ({ setUser }) => {
     .then(res => res.json())
     //.then(data => console.log(data))
     .then(data => {
+      if (!data.id) {
+        return alert(data.error)
+      }
+      
       localStorage.setItem("token", data.token)
       setUser({ user: data.id })
       ////// redirect
