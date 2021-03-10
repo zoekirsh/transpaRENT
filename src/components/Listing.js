@@ -44,7 +44,9 @@ const Listing = ( props ) => {
 
   ////// on page load
   const fetchListing = (id) => {
+    //
     console.log("bingo")
+    //
     fetch(URL + id, {
       method: 'GET',
       headers: {
@@ -81,6 +83,7 @@ const Listing = ( props ) => {
       .then(data => {
         if (data) {
           setFavorite(true)
+          setFavoriteId(data.id)
         }
       })
     }
@@ -94,7 +97,6 @@ const Listing = ( props ) => {
     )
   }
 
-      //disable button unless logged in? reroute to signup?
   const toggleReviewInput = () => {
     setReviewInput(!reviewInput)
   } 
@@ -143,11 +145,14 @@ const Listing = ( props ) => {
         .then(data => {
           setFavoriteId(data.favorite.id)
           setFavorite(!favorite)
+          props.setFavorites([...props.allFavorites, data.favorite])
         })
       }
   
       if (favorite) {
         //delete favorite
+        const updated = props.allFavorites.filter(fav => fav.id !== favoriteId )
+
         fetch(faveURL + `/${favoriteId}`, {
           method: 'DELETE', 
           headers: {
@@ -155,7 +160,10 @@ const Listing = ( props ) => {
           }
         })
         .then(res => res.json())
-        .then(setFavorite(!favorite))
+        .then(() => {
+          setFavorite(!favorite)
+          props.setFavorites(updated)
+        })
         
       }
     }

@@ -64,43 +64,48 @@ function MyReviews( { reviews, setReviews }) {
   return (
     <div>
       <h3>My reviews</h3>
-      <div className="my-review-grid">
-        <Grid>
-        {reviews.map(review => 
-          <Grid.Row container="true" columns="equal" key={review.id}>
-            <Grid.Column floated="left" width={5}>
-              <div>
-                <p><i>"{review.text}"</i></p>
-                <p>{review.address}</p>
-              </div>
-            </Grid.Column>
-            <Grid.Column floated="left" width={1}>
+      {reviews.length > 0 
+      ? <div className="my-review-grid">
+          <Grid>
+          {reviews.map(review => 
+            <Grid.Row container="true" columns="equal" key={review.id}>
+              <Grid.Column floated="left" width={5}>
+                <div>
+                  <p><i>"{review.text}"</i></p>
+                  <p>{review.address}</p>
+                </div>
+              </Grid.Column>
+              <Grid.Column floated="left" width={1}>
 
-              <Button.Group>
-                <Button basic size="mini" animated="vertical" className="edit-btn" onClick={() => editClick(review)}>
-                  <Button.Content hidden>
-                    Edit
-                  </Button.Content>
-                  <Button.Content visible>
-                    <Icon name="edit" />
-                  </Button.Content>
-                </Button>
-                
-                <Button basic size="mini" animated="vertical" onClick={() => deleteReview(review.id)}>
-                  <Button.Content hidden>
-                    Delete
-                  </Button.Content>
-                  <Button.Content visible>
-                    <Icon name="trash alternate" />
-                  </Button.Content>
-                </Button>
-              </Button.Group>
+                <Button.Group>
+                  <Button basic size="mini" animated="vertical" className="edit-btn" onClick={() => editClick(review)}>
+                    <Button.Content hidden>
+                      Edit
+                    </Button.Content>
+                    <Button.Content visible>
+                      <Icon name="edit" />
+                    </Button.Content>
+                  </Button>
+                  
+                  <Button basic size="mini" animated="vertical" onClick={() => deleteReview(review.id)}>
+                    <Button.Content hidden>
+                      Delete
+                    </Button.Content>
+                    <Button.Content visible>
+                      <Icon name="trash alternate" />
+                    </Button.Content>
+                  </Button>
+                </Button.Group>
 
-            </Grid.Column>
-          </Grid.Row>     
-        )}
-        </Grid>
-      </div>
+              </Grid.Column>
+            </Grid.Row>     
+          )}
+          </Grid>
+        </div>
+      : <div className="center-message">When you write a review, it will appear here.</div>
+      }
+      
+
     </div>
   )
 }

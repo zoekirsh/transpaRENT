@@ -68,7 +68,7 @@ const Login = ({ setUser }) => {
       </Form>
     </div>
     <div className="login-link">
-      <a href={"http://localhost:3001/login"}>New here? Sign up</a>
+      <a href={"http://localhost:3001/signup"}>New here? Sign up</a>
     </div>
    </div>
   )

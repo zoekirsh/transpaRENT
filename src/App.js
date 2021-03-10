@@ -40,7 +40,7 @@ function App() {
   /////////////////////////////
   //console.log(user, token)
   //console.log("favorites??", favorites)
-  console.log("REviews!!", reviews)
+  //console.log("Reviews!!", reviews)
   /////////////////////////////
 
   //////fetch all user data
@@ -103,8 +103,12 @@ function App() {
 
 
   const handleLogout = () => {
-    localStorage.removeItem("token")
+    setFavorites([])
+    setReviews([])
+    setToken("")
     setUser({ user: "Bye bye"})
+
+    localStorage.clear()
     return <Redirect to="/" push={true}/>
   }
 
@@ -115,14 +119,14 @@ function App() {
         <div className="Main">
           <Navbar user={ user }/>
           <Switch>
-            <Route exact path="/" render={() => <Map favorites={favorites} listings={allListings}/>}/>
+            <Route exact path="/" render={() => <Map favorites={favorites} listings={allListings} user={user}/>}/>
             <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
             <Route exact path="/signup" render={() => <Signup setUser={setUser}/>}/>
             
             {/* listed / review routes */} 
             <Route exact path="/list" />
             <Route exact path="/reviews" render={() => <ReviewMap allListings={allListings}/>}/> 
-            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token} setReviewsApp={setReviews} allReviews={reviews}/> }/>
+            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token} setFavorites={setFavorites} allFavorites={favorites} setReviewsApp={setReviews} allReviews={reviews}/> }/>
             
             {/* user routes */}
             {localStorage.token && ( 

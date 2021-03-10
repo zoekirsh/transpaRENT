@@ -1,33 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Fave from './Fave';
 import { Card } from 'semantic-ui-react';
 
-const MyFavorites = () => {
+const MyFavorites = ( {favorites} ) => {
 
-  const URL = "http://localhost:3000/favorites"
-  
-  const [ favorites, setFavorites ] = useState([])
-
-  useEffect(() => {
-    fetchFavorites()
-  }, [])
-
-  const fetchFavorites = () => {
-    const token = localStorage.token 
-
-    if (token) {
-      fetch(URL, {
-        headers: {
-          "Authorization" : `Bearer ${token}`
-        }
-      })
-      .then(res => res.json())
-      .then(data => setFavorites(data))
-    }
-    
-  }
-
-  const renderFavorites = () => {
+    const renderFavorites = () => {
     if (favorites.length > 0) {
       return favorites.map(fave => {
         return (
@@ -37,7 +14,7 @@ const MyFavorites = () => {
         )
       })
     } else {
-      return ("You have not saved any listings yet.")
+      return (<div className="center-message">When you save a listing, it will appear here.</div>)
     }
   }
 

@@ -75,7 +75,14 @@ const AddReview = ( props ) => {
     <div className="center">
       <Form className="text-area" onSubmit={createReview}>
       
-        <Form.TextArea className="text-area" name="text" value={reviewDetails.text} onChange={handleChange} placeholder="Share something about your experience living at this property..." required/>
+        <Form.TextArea 
+          className="text-area" 
+          name="text" 
+          value={reviewDetails.text} 
+          onChange={handleChange} 
+          placeholder="Share something about your experience living at this property..." 
+          required
+        />
         <Form.Button>Publish</Form.Button>
 
       </Form>

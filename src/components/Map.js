@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react';
 import Loading from './Loading';
 
 
-const Map = ({ favorites, listings }) => {
+const Map = ({ favorites, listings, user }) => {
 
   //abstract city string & state code
   ////const city = "San Diego"
@@ -51,10 +51,12 @@ const Map = ({ favorites, listings }) => {
   }
 
   const isFavorite = () => {
-    if (favorites.find(fave => fave.property_id.toString() === selected.property_id)) {
-      return <Icon name='heart'/>
-    } else {
-      return <Icon name='heart outline'/>
+    if (typeof(user.user) !== "string") {
+      if (favorites.find(fave => fave.property_id.toString() === selected.property_id)) {
+        return <Icon name='heart'/>
+      } else {
+        return <Icon name='heart outline'/>
+      }
     }
   } 
  

@@ -4,7 +4,14 @@ import { Form, Input, Dropdown, Button } from "semantic-ui-react";
 
 const Signup = ({ setUser }) => {
 
-  const [inputs, setInputs] = useState({ username: "", password: "", name: "", email: "", city: "", state: ""})
+  const [inputs, setInputs] = useState({ 
+    username: "", 
+    password: "", 
+    name: "", 
+    email: "", 
+    city: "", 
+    state: ""
+  })
   const history = useHistory()
   
   const URL = "http://localhost:3000/signup"
