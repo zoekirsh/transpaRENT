@@ -108,8 +108,9 @@ function ReviewMap( { allListings } ) {
         pathname: `/viewlisting/${selected.id}`,
         state: {
           nolisting: true,
-          review: selected.address
-        }
+          review: selected.address,
+        },
+        review: selected
       })
     }
   }

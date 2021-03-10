@@ -21,11 +21,11 @@ const Listing = ( props ) => {
   const reviewURL = "http://localhost:3000/getreviews"
 
   //console.log(props.user.user)
-  console.log("Listing=", listing)
+  //console.log("Listing=", listing)
   //console.log("Reviews from listing =>", reviews)
 
   useEffect(() => {
-    console.log("STATE nested listing", props.location.state.listing)
+    //console.log("STATE nested listing", props.location.state.listing)
 
     if (!props.location.state.listing) {
       if (props.location.state.nolisting) { 
@@ -67,6 +67,7 @@ const Listing = ( props ) => {
     .then(data => setReviews(data))
   }
   
+
   const isFavorite = (property_id) => {
     const token = localStorage.token
 
@@ -239,7 +240,16 @@ const Listing = ( props ) => {
               ? <Button disabled content="Log in to review" /> 
               : <Button basic color="grey" content="Write Review" onClick={toggleReviewInput}/>
               )
-            : <AddReview listing={listing} user={props.user.user} setReviewsListing={setReviews} setReviewsApp={props.setReviews} setReviewInput={setReviewInput} reviews={reviews}/>
+            : <AddReview 
+              listing={listing} 
+              user={props.user.user} 
+              setReviewsListing={setReviews} 
+              setReviewsApp={props.setReviewsApp} 
+              setReviewInput={setReviewInput} 
+              allReviews={props.allReviews}
+              listingReviews={reviews} 
+              noListingDetails={props.location.review}
+              />
           }
           
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Review = ( props ) => {
-  console.log("here!!", props)
+  //console.log("here!!", props)
   return(
     <div className="review">
       <div className="review-text">

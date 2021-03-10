@@ -7,18 +7,39 @@ const AddReview = ( props ) => {
   const URL = "http://localhost:3000/reviews"
 
   const [ reviewDetails, setReviewDetails ] = useState({ 
-    text:"", 
-    address: props.listing.location.address.line, 
-    user_id: props.user.id, 
-    city: props.listing.location.address.city, 
-    state: props.listing.location.address.state_code, 
-    zipcode: props.listing.location.address.postal_code,
-    lat: props.listing.location.address.coordinate.lat,
-    lng: props.listing.location.address.coordinate.lon
+    text: ""
   })
 
   //console.log(reviewDetails)
   //console.log("Props.reviews @ Add Review", props.reviews)
+
+  const formatReview = () => {
+    if (props.listing) {
+      return {
+        text: reviewDetails.text,
+        address: props.listing.location.address.line, 
+        user_id: props.user.id, 
+        city: props.listing.location.address.city, 
+        state: props.listing.location.address.state_code, 
+        zipcode: props.listing.location.address.postal_code,
+        lat: props.listing.location.address.coordinate.lat,
+        lng: props.listing.location.address.coordinate.lon
+      }
+    }
+
+    if (props.noListingDetails) {
+      return {
+        text: reviewDetails.text,
+        address: props.noListingDetails.address, 
+        user_id: props.user.id, 
+        city: props.noListingDetails.city, 
+        state: props.noListingDetails.state, 
+        zipcode: null,
+        lat: props.noListingDetails.lat,
+        lng: props.noListingDetails.lng
+      }
+    }
+  }
 
 
   const createReview = (e) => {
@@ -32,12 +53,12 @@ const AddReview = ( props ) => {
           'Content-Type' : 'application/json',
           "Authorization" : `Bearer ${token}`
         },
-        body: JSON.stringify( reviewDetails )
+        body: JSON.stringify( formatReview() )
       })
       .then(res => res.json())
       .then(data => {
-        props.setReviewsListing([...props.reviews, data.review])
-        props.setReviewsApp([...props.reviews, data.review])
+        props.setReviewsListing([...props.listingReviews, data.review])
+        props.setReviewsApp([...props.allReviews, data.review])
         props.setReviewInput(false)
       })
     } 
@@ -47,7 +68,7 @@ const AddReview = ( props ) => {
   const handleChange = (e, value) => {
     e.persist()
     //console.log(value)
-    setReviewDetails({...reviewDetails, text: value.value })
+    setReviewDetails({text: value.value })
   }
 
   return (

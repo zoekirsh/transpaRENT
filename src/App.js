@@ -38,7 +38,7 @@ function App() {
   }, [])
 
   /////////////////////////////
-  console.log(user, token)
+  //console.log(user, token)
   //console.log("favorites??", favorites)
   console.log("REviews!!", reviews)
   /////////////////////////////
@@ -122,7 +122,7 @@ function App() {
             {/* listed / review routes */} 
             <Route exact path="/list" />
             <Route exact path="/reviews" render={() => <ReviewMap allListings={allListings}/>}/> 
-            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token} setReviews={setReviews}/> }/>
+            <Route path="/viewlisting/:id" render={(routerProps) => <Listing {...routerProps} user={user} token={token} setReviewsApp={setReviews} allReviews={reviews}/> }/>
             
             {/* user routes */}
             {localStorage.token && ( 

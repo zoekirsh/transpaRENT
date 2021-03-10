@@ -23,6 +23,14 @@ function Search( { panTo, setSelected, reviews } ) {
     return addy.split(",")[0]
   }
 
+  const formatCity = (addy) => {
+    return addy.split(", ")[1]
+  }
+
+  const formatState = (addy) => {
+    return addy.split(", ")[2]
+  }
+
   const findReviews = (coord1, coord2) => {
     const first = reviews.find(review => review.lat === coord1 && review.lng === coord2)
     if (first) {
@@ -50,10 +58,12 @@ function Search( { panTo, setSelected, reviews } ) {
           setSelected({
             lat: lat, 
             lng: lng, 
-            address: formatAddress(address), 
+            address: formatAddress(address),
+            city: formatCity(address),
+            state: formatState(address),
+            // no zipcode for now, 
             text: findReviews(lat, lng)
           })
-          //console.log(address)
           
         } catch(error) {
           console.log("ERROR", error)
