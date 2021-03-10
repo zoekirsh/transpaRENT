@@ -63,7 +63,7 @@ function MyReviews( { reviews, setReviews }) {
 
   return (
     <div>
-      <h3>My reviews</h3>
+      <h3 className="grey">Your Reviews</h3>
       {reviews.length > 0 
       ? <div className="my-review-grid">
           <Grid>

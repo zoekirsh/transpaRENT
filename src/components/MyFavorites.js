@@ -20,7 +20,7 @@ const MyFavorites = ( {favorites} ) => {
 
   return (
     <div>
-      <h3>Saved Listings</h3>
+      <h3 className="grey">Saved Listings</h3>
 
       <div className="favorites-container center">
         {renderFavorites()}

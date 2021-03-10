@@ -44,6 +44,10 @@
   color: #61dafb;
 }
 
+.grey {
+  color: grey;
+}
+
 .center {
   display: flex;
   flex-direction: column;
@@ -171,4 +175,13 @@
 
 .space-between {
   padding-bottom: 2em;
+}
+
+#profile-gif {
+  padding-top: 7rem;
+}
+
+#profile-gif img {
+  max-width: 300px;
+  height: auto;
 }
