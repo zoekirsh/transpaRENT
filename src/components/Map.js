@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
 import { Icon } from 'semantic-ui-react';
-import Loading from './Loading';
+import MapLoading from './MapLoading';
 
 
 const Map = ({ favorites, listings, user }) => {
@@ -46,7 +46,7 @@ const Map = ({ favorites, listings, user }) => {
     })}
     else {
       console.log("not ready yet.")
-      return <Loading />
+      return <MapLoading />
     }
   }
 
@@ -88,7 +88,7 @@ const Map = ({ favorites, listings, user }) => {
   if(!isLoaded) return "loading..."
 
   if (listings.length === 0) {
-    return <Loading />
+    return <MapLoading />
   }
 
   return (

@@ -17,7 +17,7 @@ const URL = "http://localhost:3000"
 //realtor urls
 const realtorAPIKey = "1a96c214bcmshee3d6c8642e6226p1fd718jsn6cc676cb3bae"
 const realtorAPIHost = "realtor-com-real-estate.p.rapidapi.com"
-const realtorAPIURL = "https://realtor-com-real-estate.p.rapidapi.com/for-rent?city=San%20Diego&state_code=CA&limit=100&offset=0&location=92037-6941"
+const realtorAPIURL = "https://realtor-com-real-estate.p.rapidapi.com/for-rent?city=San%20Diego&state_code=CA&limit=150&offset=0&location=92037-6941"
 
 
 

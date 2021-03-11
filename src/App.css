@@ -86,7 +86,12 @@
 
 #right-nav {
   justify-content: flex-end !important;
-  padding-right: 30px;
+  padding-right: 40px;
+}
+
+#right-nav-login {
+  justify-content: flex-end !important;
+  padding-right: 40px;
 }
 
 .address-search {

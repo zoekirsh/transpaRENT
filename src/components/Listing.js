@@ -151,7 +151,6 @@ const Listing = ( props ) => {
   
       if (favorite) {
         //delete favorite
-        //const updated = props.allFavorites.filter(fav => fav.id !== favoriteId )
 
         fetch(faveURL + `/${favoriteId}`, {
           method: 'DELETE', 

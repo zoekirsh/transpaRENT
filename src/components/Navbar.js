@@ -62,7 +62,7 @@ const Navbar = ( { user } ) => {
       {!user.user?.id ? (
         <>
           <div className="right-nav">
-            <Menu text fluid stackable style={{ margin: 20 }}>
+            <Menu text fluid stackable style={{ margin: 20 }} id="right-nav-login">
               <Link to="/login">
                 <Menu.Item
                   name="login"
