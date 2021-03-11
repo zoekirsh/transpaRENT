@@ -151,7 +151,7 @@ const Listing = ( props ) => {
   
       if (favorite) {
         //delete favorite
-        const updated = props.allFavorites.filter(fav => fav.id !== favoriteId )
+        //const updated = props.allFavorites.filter(fav => fav.id !== favoriteId )
 
         fetch(faveURL + `/${favoriteId}`, {
           method: 'DELETE', 
@@ -160,14 +160,18 @@ const Listing = ( props ) => {
           }
         })
         .then(res => res.json())
-        .then(() => {
-          setFavorite(!favorite)
-          props.setFavorites(updated)
-        })
+        .then(deleteHelper())
         
       }
     }
     
+  }
+
+  const deleteHelper = () => {
+    const updated = props.allFavorites.filter(fav => fav.id !== favoriteId )
+
+    setFavorite(!favorite)
+    props.setFavorites(updated)
   }
 
   const primaryPhoto = () => {
@@ -180,11 +184,10 @@ const Listing = ( props ) => {
 
   const displayIcon = () => {
     if (typeof(props.user.user) !== "string") {
-      if (favorite) {
-        return <Icon name='heart' onClick={toggleFavorite} /> 
-      } else {
-        return <Icon name='heart outline' onClick={toggleFavorite} />
-      }
+      return favorite 
+      ? <Icon name='heart' onClick={toggleFavorite} /> 
+      : <Icon name='heart outline' onClick={toggleFavorite} />
+
     } else {
       return null
     }
