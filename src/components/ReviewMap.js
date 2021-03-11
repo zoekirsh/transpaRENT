@@ -92,9 +92,8 @@ function ReviewMap( { allListings } ) {
     const active = allListings.find(listing => 
       listing.location.address?.coordinate?.lat === selected.lat && 
       listing.location.address?.coordinate?.lon === selected.lng
-      )
+    )
 
-    console.log(active)
 
     if (active) {
       history.push({

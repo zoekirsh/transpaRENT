@@ -72,6 +72,13 @@ const Map = ({ favorites, listings, user }) => {
     width: "75%"
   }
 
+  const options = {
+    disableDefaultUI: true,
+    zoomControl: true, 
+    scaleControl: true,
+    streetViewControl: true
+  }
+
   //set to: Old Town San Diego
   const defaultCenter = {
     lat: 32.748950, 
@@ -95,7 +102,9 @@ const Map = ({ favorites, listings, user }) => {
     <GoogleMap 
       mapContainerStyle={mapStyles}
       zoom={13}
-      center={defaultCenter}>
+      center={defaultCenter}
+      options={options}
+    >
         {
           populateMap()
         }
