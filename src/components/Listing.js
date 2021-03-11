@@ -7,7 +7,7 @@ import ImageCarousel from './ImageCarousel';
 import NoListing from './NoListing';
 
 const Listing = ( props ) => {
-  console.log(props)
+  //console.log(props)
 
   const [ absent, setAbsent ] = useState(false)
   const [ listing, setListing ] = useState(props.location.state.listing)
@@ -178,6 +178,18 @@ const Listing = ( props ) => {
     props.location.state.href 
   }
 
+  const displayIcon = () => {
+    if (typeof(props.user.user) !== "string") {
+      if (favorite) {
+        return <Icon name='heart' onClick={toggleFavorite} /> 
+      } else {
+        return <Icon name='heart outline' onClick={toggleFavorite} />
+      }
+    } else {
+      return null
+    }
+  }
+
   if (!listing && !absent) {
     return <Loading />
   }
@@ -188,10 +200,7 @@ const Listing = ( props ) => {
       {absent 
       ? <NoListing /> 
       :  <div className="listing-container">
-          <h2>{listing?.description?.name} {favorite 
-            ? <Icon name='heart' onClick={toggleFavorite} /> 
-            : <Icon name='heart outline' onClick={toggleFavorite} />}
-          </h2>
+          <h2>{listing?.description?.name} <span>{displayIcon()}</span></h2>
           
           <div className="listing_images">
             <ImageCarousel primary={primaryPhoto()} images={listing.photos}/>
